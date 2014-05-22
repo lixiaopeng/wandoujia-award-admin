@@ -1,0 +1,13 @@
+/node_modules/
+/public/js/vendor/jquery
+/public/js/vendor/modernizr
+
+*.DS_store
+*.log
+
+/node_modules/
+/app/components
+/dist/
+/test/output/
+/.sass-cache/
+/.tmp/
