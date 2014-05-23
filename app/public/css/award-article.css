@@ -1,3 +1,4 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo);
 /* line 5, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.17/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -1628,23 +1629,23 @@ Positive
 }
 
 /* Text colors */
-/* line 4, ../../src/stylesheets/_layout.scss */
+/* line 6, ../../src/stylesheets/_layout.scss */
 a {
   color: #3baa24;
   text-decoration: none;
 }
-/* line 8, ../../src/stylesheets/_layout.scss */
+/* line 10, ../../src/stylesheets/_layout.scss */
 a:hover {
   color: #2f7c2f;
 }
 
-/* line 13, ../../src/stylesheets/_layout.scss */
+/* line 15, ../../src/stylesheets/_layout.scss */
 html,
 body {
   height: 100%;
 }
 
-/* line 18, ../../src/stylesheets/_layout.scss */
+/* line 20, ../../src/stylesheets/_layout.scss */
 body {
   background-color: #fff;
   font: 12px/18px "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1652,7 +1653,7 @@ body {
   -webkit-text-size-adjust: none;
 }
 
-/* line 25, ../../src/stylesheets/_layout.scss */
+/* line 27, ../../src/stylesheets/_layout.scss */
 h1,
 h2,
 h3,
@@ -1660,41 +1661,66 @@ h4 {
   line-height: 1.78;
 }
 
-/* line 32, ../../src/stylesheets/_layout.scss */
+/* line 34, ../../src/stylesheets/_layout.scss */
 h1 {
   font-size: 40px;
   font-weight: 700;
 }
 
-/* line 37, ../../src/stylesheets/_layout.scss */
+/* line 39, ../../src/stylesheets/_layout.scss */
 h2 {
   font-size: 30px;
   font-weight: 500;
 }
 
-/* line 42, ../../src/stylesheets/_layout.scss */
+/* line 44, ../../src/stylesheets/_layout.scss */
 h3 {
   font-size: 20px;
   font-weight: 300;
 }
 
-/* line 47, ../../src/stylesheets/_layout.scss */
+/* line 49, ../../src/stylesheets/_layout.scss */
 h4 {
   font-size: 14px;
   font-weight: 200;
 }
 
-/* line 52, ../../src/stylesheets/_layout.scss */
+/* line 54, ../../src/stylesheets/_layout.scss */
+.hide {
+  display: none !important;
+}
+
+/* line 58, ../../src/stylesheets/_layout.scss */
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+}
+
+/* line 62, ../../src/stylesheets/_layout.scss */
+.show {
+  display: block !important;
+}
+
+/* entypo */
+/* line 67, ../../src/stylesheets/_layout.scss */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+/* line 72, ../../src/stylesheets/_layout.scss */
 .fl-left {
   float: left;
 }
 
-/* line 56, ../../src/stylesheets/_layout.scss */
+/* line 76, ../../src/stylesheets/_layout.scss */
 .fl-right {
   float: right;
 }
 
-/* line 60, ../../src/stylesheets/_layout.scss */
+/* line 80, ../../src/stylesheets/_layout.scss */
 #main {
   position: absolute;
   top: 60px;
@@ -1703,19 +1729,31 @@ h4 {
   left: 0;
 }
 
-/* line 68, ../../src/stylesheets/_layout.scss */
+/* line 88, ../../src/stylesheets/_layout.scss */
 #content {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 150px;
+  padding: 10px;
   overflow: auto;
 }
 
-/* line 77, ../../src/stylesheets/_layout.scss */
+/* line 98, ../../src/stylesheets/_layout.scss */
+#main.editor-page {
+  top: 0;
+}
+
+/* line 102, ../../src/stylesheets/_layout.scss */
+#main.editor-page #content {
+  left: 0;
+  padding: 0;
+}
+
+/* line 107, ../../src/stylesheets/_layout.scss */
 .container {
-  width: 800px;
+  width: 700px;
   margin: 0 auto;
 }
 
@@ -1746,8 +1784,8 @@ h4 {
 }
 /* line 23, ../../src/stylesheets/_header.scss */
 #header #nav {
+  position: relative;
   margin-left: 150px;
-  padding: 10px;
 }
 /* line 28, ../../src/stylesheets/_header.scss */
 #header #nav a {
@@ -1756,10 +1794,23 @@ h4 {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  padding: 0 15px;
+  padding: 10px 15px 5px 15px;
   text-align: center;
   line-height: 40px;
   font-size: 14px;
+}
+/* line 37, ../../src/stylesheets/_header.scss */
+#header #nav a.active {
+  -moz-box-shadow: 0 5px 0 0 #3baa24;
+  -webkit-box-shadow: 0 5px 0 0 #3baa24;
+  box-shadow: 0 5px 0 0 #3baa24;
+}
+/* line 41, ../../src/stylesheets/_header.scss */
+#header #nav a.button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 0 1.5em;
 }
 
 /* line 1, ../../src/stylesheets/_footer.scss */

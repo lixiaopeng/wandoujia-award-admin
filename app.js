@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 16:46:34
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-22 21:18:22
+* @Last Modified time: 2014-05-23 15:10:04
 */
 
 
@@ -68,6 +68,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

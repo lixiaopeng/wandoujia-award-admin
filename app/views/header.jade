@@ -1,6 +1,18 @@
+//- - var currentPage = (("undefined" != typeof currentPage) ? 'fancy-theme' : 'home-page')
+
 header#header
     #logo.fl-left WAA
     nav#nav
-        a.ui.teal.button.fl-right(href='/admin/articles/new') New
-        a(href='/admin/articles') Posts
-        a(href='/admin/drafts') Drafts
+        a.ui.green.button.fl-right(href='/admin/articles/new')
+            i.entypo-pencil
+            | New
+
+        if currentPage == 'admin-articles'
+            a.active(href='/admin/articles') Artiles
+        else
+            a(href='/admin/articles') Artiles
+
+        if currentPage == 'admin-drafts'
+            a.active(href='/admin/drafts') Drafts
+        else
+            a(href='/admin/drafts') Drafts

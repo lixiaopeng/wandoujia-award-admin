@@ -1,6 +1,8 @@
 @import "button";
 @import "vars";
 
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
 a {
     color: #3baa24;
     text-decoration: none;
@@ -49,6 +51,24 @@ h4 {
     font-weight: 200;
 }
 
+.hide {
+    display: none !important;
+}
+
+.inline-block {
+    @include inline-block;
+}
+
+.show {
+    display: block !important;
+}
+
+/* entypo */
+[class*="entypo-"]:before {
+    font-family: 'entypo', sans-serif;
+    // margin-right: 10px;
+}
+
 .fl-left {
     float: left;
 }
@@ -71,12 +91,20 @@ h4 {
     right: 0;
     bottom: 0;
     left: 150px;
+    padding: 10px;
     overflow: auto;
-    background: #fee;
+}
+
+#main.editor-page {
+    top: 0;
+}
+
+#main.editor-page #content {
+    left: 0;
+    padding: 0;
 }
 
 .container {
-    width: 800px;
+    width: 700px;
     margin: 0 auto;
 }
-

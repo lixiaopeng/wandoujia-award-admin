@@ -1,3 +1,4 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo);
 /* line 5, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.17/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -1628,23 +1629,23 @@ Positive
 }
 
 /* Text colors */
-/* line 4, ../../src/stylesheets/_layout.scss */
+/* line 6, ../../src/stylesheets/_layout.scss */
 a {
   color: #3baa24;
   text-decoration: none;
 }
-/* line 8, ../../src/stylesheets/_layout.scss */
+/* line 10, ../../src/stylesheets/_layout.scss */
 a:hover {
   color: #2f7c2f;
 }
 
-/* line 13, ../../src/stylesheets/_layout.scss */
+/* line 15, ../../src/stylesheets/_layout.scss */
 html,
 body {
   height: 100%;
 }
 
-/* line 18, ../../src/stylesheets/_layout.scss */
+/* line 20, ../../src/stylesheets/_layout.scss */
 body {
   background-color: #fff;
   font: 12px/18px "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1652,7 +1653,7 @@ body {
   -webkit-text-size-adjust: none;
 }
 
-/* line 25, ../../src/stylesheets/_layout.scss */
+/* line 27, ../../src/stylesheets/_layout.scss */
 h1,
 h2,
 h3,
@@ -1660,41 +1661,66 @@ h4 {
   line-height: 1.78;
 }
 
-/* line 32, ../../src/stylesheets/_layout.scss */
+/* line 34, ../../src/stylesheets/_layout.scss */
 h1 {
   font-size: 40px;
   font-weight: 700;
 }
 
-/* line 37, ../../src/stylesheets/_layout.scss */
+/* line 39, ../../src/stylesheets/_layout.scss */
 h2 {
   font-size: 30px;
   font-weight: 500;
 }
 
-/* line 42, ../../src/stylesheets/_layout.scss */
+/* line 44, ../../src/stylesheets/_layout.scss */
 h3 {
   font-size: 20px;
   font-weight: 300;
 }
 
-/* line 47, ../../src/stylesheets/_layout.scss */
+/* line 49, ../../src/stylesheets/_layout.scss */
 h4 {
   font-size: 14px;
   font-weight: 200;
 }
 
-/* line 52, ../../src/stylesheets/_layout.scss */
+/* line 54, ../../src/stylesheets/_layout.scss */
+.hide {
+  display: none !important;
+}
+
+/* line 58, ../../src/stylesheets/_layout.scss */
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+}
+
+/* line 62, ../../src/stylesheets/_layout.scss */
+.show {
+  display: block !important;
+}
+
+/* entypo */
+/* line 67, ../../src/stylesheets/_layout.scss */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+/* line 72, ../../src/stylesheets/_layout.scss */
 .fl-left {
   float: left;
 }
 
-/* line 56, ../../src/stylesheets/_layout.scss */
+/* line 76, ../../src/stylesheets/_layout.scss */
 .fl-right {
   float: right;
 }
 
-/* line 60, ../../src/stylesheets/_layout.scss */
+/* line 80, ../../src/stylesheets/_layout.scss */
 #main {
   position: absolute;
   top: 60px;
@@ -1703,19 +1729,31 @@ h4 {
   left: 0;
 }
 
-/* line 68, ../../src/stylesheets/_layout.scss */
+/* line 88, ../../src/stylesheets/_layout.scss */
 #content {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 150px;
+  padding: 10px;
   overflow: auto;
 }
 
-/* line 77, ../../src/stylesheets/_layout.scss */
+/* line 98, ../../src/stylesheets/_layout.scss */
+#main.editor-page {
+  top: 0;
+}
+
+/* line 102, ../../src/stylesheets/_layout.scss */
+#main.editor-page #content {
+  left: 0;
+  padding: 0;
+}
+
+/* line 107, ../../src/stylesheets/_layout.scss */
 .container {
-  width: 800px;
+  width: 700px;
   margin: 0 auto;
 }
 
@@ -1746,8 +1784,8 @@ h4 {
 }
 /* line 23, ../../src/stylesheets/_header.scss */
 #header #nav {
+  position: relative;
   margin-left: 150px;
-  padding: 10px;
 }
 /* line 28, ../../src/stylesheets/_header.scss */
 #header #nav a {
@@ -1756,10 +1794,23 @@ h4 {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  padding: 0 15px;
+  padding: 10px 15px 5px 15px;
   text-align: center;
   line-height: 40px;
   font-size: 14px;
+}
+/* line 37, ../../src/stylesheets/_header.scss */
+#header #nav a.active {
+  -moz-box-shadow: 0 5px 0 0 #3baa24;
+  -webkit-box-shadow: 0 5px 0 0 #3baa24;
+  box-shadow: 0 5px 0 0 #3baa24;
+}
+/* line 41, ../../src/stylesheets/_header.scss */
+#header #nav a.button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 0 1.5em;
 }
 
 /* line 1, ../../src/stylesheets/_sidebar.scss */
@@ -1795,4 +1846,417 @@ h4 {
   -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05);
   padding-top: 20px;
+}
+
+/*
+* # Semantic - Input
+* http://github.com/jlukic/semantic-ui/
+*
+*
+* Copyright 2013 Contributors
+* Released under the MIT license
+* http://opensource.org/licenses/MIT
+*
+*/
+/*******************************
+Standard
+*******************************/
+/*--------------------
+Inputs
+---------------------*/
+/* line 17, ../../src/stylesheets/_input.scss */
+.ui.input {
+  display: inline-block;
+  position: relative;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* line 22, ../../src/stylesheets/_input.scss */
+.ui.input input {
+  width: 100%;
+  font-family: "Helvetica Neue", "Helvetica", Arial;
+  margin: 0em;
+  padding: 0.65em 1em;
+  font-size: 1em;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  outline: none;
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 0.3125em;
+  -webkit-transition: background-color 0.3s ease-out, -webkit-box-shadow 0.2s ease, border-color 0.2s ease;
+  -moz-transition: background-color 0.3s ease-out, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.3s ease-out, box-shadow 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*--------------------
+Placeholder
+---------------------*/
+/* browsers require these rules separate */
+/* line 46, ../../src/stylesheets/_input.scss */
+.ui.input::-webkit-input-placeholder {
+  color: #BBBBBB;
+}
+
+/* line 49, ../../src/stylesheets/_input.scss */
+.ui.input::-moz-placeholder {
+  color: #BBBBBB;
+}
+
+/*******************************
+States
+*******************************/
+/*--------------------
+Active
+---------------------*/
+/* line 58, ../../src/stylesheets/_input.scss */
+.ui.input input:active,
+.ui.input.down input {
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: #FAFAFA;
+}
+
+/*--------------------
+Loading
+---------------------*/
+/* line 66, ../../src/stylesheets/_input.scss */
+.ui.loading.input > .icon {
+  background: url(../images/loader-mini.gif) no-repeat 50% 50%;
+}
+
+/* line 69, ../../src/stylesheets/_input.scss */
+.ui.loading.input > .icon:before,
+.ui.loading.input > .icon:after {
+  display: none;
+}
+
+/*--------------------
+Focus
+---------------------*/
+/* line 76, ../../src/stylesheets/_input.scss */
+.ui.input.focus input,
+.ui.input input:focus {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* line 81, ../../src/stylesheets/_input.scss */
+.ui.input.focus input input::-webkit-input-placeholder,
+.ui.input input:focus input::-webkit-input-placeholder {
+  color: #AAAAAA;
+}
+
+/* line 85, ../../src/stylesheets/_input.scss */
+.ui.input.focus input input::-moz-placeholder,
+.ui.input input:focus input::-moz-placeholder {
+  color: #AAAAAA;
+}
+
+/*--------------------
+Error
+---------------------*/
+/* line 92, ../../src/stylesheets/_input.scss */
+.ui.input.error input {
+  background-color: #FFFAFA;
+  border-color: #E7BEBE;
+  color: #D95C5C;
+}
+
+/* Error Placeholder */
+/* line 98, ../../src/stylesheets/_input.scss */
+.ui.input.error input ::-webkit-input-placeholder {
+  color: rgba(255, 80, 80, 0.4);
+}
+
+/* line 101, ../../src/stylesheets/_input.scss */
+.ui.input.error input ::-moz-placeholder {
+  color: rgba(255, 80, 80, 0.4);
+}
+
+/* line 104, ../../src/stylesheets/_input.scss */
+.ui.input.error input :focus::-webkit-input-placeholder {
+  color: rgba(255, 80, 80, 0.7);
+}
+
+/* line 107, ../../src/stylesheets/_input.scss */
+.ui.input.error input :focus::-moz-placeholder {
+  color: rgba(255, 80, 80, 0.7);
+}
+
+/*******************************
+Variations
+*******************************/
+/*--------------------
+Transparent
+---------------------*/
+/* line 116, ../../src/stylesheets/_input.scss */
+.ui.transparent.input input {
+  border: none;
+  background-color: transparent;
+}
+
+/*--------------------
+Icon
+---------------------*/
+/* line 123, ../../src/stylesheets/_input.scss */
+.ui.icon.input > .icon {
+  cursor: default;
+  position: absolute;
+  opacity: 0.5;
+  top: 0px;
+  right: 0px;
+  margin: 0em;
+  width: 2.6em;
+  height: 100%;
+  padding-top: 0.82em;
+  text-align: center;
+  border-radius: 0em 0.3125em 0.3125em 0em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+}
+
+/* line 143, ../../src/stylesheets/_input.scss */
+.ui.icon.input > .link.icon {
+  cursor: pointer;
+}
+
+/* line 146, ../../src/stylesheets/_input.scss */
+.ui.icon.input input {
+  padding-right: 3em !important;
+}
+
+/* line 149, ../../src/stylesheets/_input.scss */
+.ui.icon.input > .circular.icon {
+  top: 0.35em;
+  right: 0.5em;
+}
+
+/* Left Side */
+/* line 154, ../../src/stylesheets/_input.scss */
+.ui.left.icon.input > .icon {
+  right: auto;
+  left: 1px;
+  border-radius: 0.3125em 0em 0em 0.3125em;
+}
+
+/* line 159, ../../src/stylesheets/_input.scss */
+.ui.left.icon.input > .circular.icon {
+  right: auto;
+  left: 0.5em;
+}
+
+/* line 163, ../../src/stylesheets/_input.scss */
+.ui.left.icon.input > input {
+  padding-left: 3em !important;
+  padding-right: 1.2em !important;
+}
+
+/* Focus */
+/* line 168, ../../src/stylesheets/_input.scss */
+.ui.icon.input > input:focus ~ .icon {
+  opacity: 1;
+}
+
+/*--------------------
+Labeled
+---------------------*/
+/* line 174, ../../src/stylesheets/_input.scss */
+.ui.labeled.input .corner.label {
+  font-size: 0.7em;
+  border-radius: 0 0.3125em;
+}
+
+/* line 178, ../../src/stylesheets/_input.scss */
+.ui.labeled.input .left.corner.label {
+  border-radius: 0.3125em 0;
+}
+
+/* line 181, ../../src/stylesheets/_input.scss */
+.ui.labeled.input input {
+  padding-right: 2.5em !important;
+}
+
+/* Spacing with corner label */
+/* line 185, ../../src/stylesheets/_input.scss */
+.ui.labeled.icon.input:not(.left) > input {
+  padding-right: 3.25em !important;
+}
+
+/* line 188, ../../src/stylesheets/_input.scss */
+.ui.labeled.icon.input:not(.left) > .icon {
+  margin-right: 1.25em;
+}
+
+/*--------------------
+Action
+---------------------*/
+/* line 194, ../../src/stylesheets/_input.scss */
+.ui.action.input {
+  display: table;
+}
+
+/* line 197, ../../src/stylesheets/_input.scss */
+.ui.action.input > input {
+  display: table-cell;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  border-right: none;
+}
+
+/* line 203, ../../src/stylesheets/_input.scss */
+.ui.action.input > .button,
+.ui.action.input > .buttons {
+  display: table-cell;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  white-space: nowrap;
+}
+
+/* line 210, ../../src/stylesheets/_input.scss */
+.ui.action.input > .button > .icon,
+.ui.action.input > .buttons > .button > .icon {
+  display: inline;
+  vertical-align: top;
+}
+
+/* line 215, ../../src/stylesheets/_input.scss */
+.ui.fluid.action.input {
+  display: table;
+  width: 100%;
+}
+
+/* line 219, ../../src/stylesheets/_input.scss */
+.ui.fluid.action.input > .button {
+  width: 0.01%;
+}
+
+/*--------------------
+Fluid
+---------------------*/
+/* line 225, ../../src/stylesheets/_input.scss */
+.ui.fluid.input {
+  display: block;
+}
+
+/*--------------------
+Size
+---------------------*/
+/* line 231, ../../src/stylesheets/_input.scss */
+.ui.mini.input {
+  font-size: 0.8125em;
+}
+
+/* line 234, ../../src/stylesheets/_input.scss */
+.ui.small.input {
+  font-size: 0.875em;
+}
+
+/* line 237, ../../src/stylesheets/_input.scss */
+.ui.input {
+  font-size: 1em;
+}
+
+/* line 240, ../../src/stylesheets/_input.scss */
+.ui.large.input {
+  font-size: 1.125em;
+}
+
+/* line 243, ../../src/stylesheets/_input.scss */
+.ui.big.input {
+  font-size: 1.25em;
+}
+
+/* line 246, ../../src/stylesheets/_input.scss */
+.ui.huge.input {
+  font-size: 1.375em;
+}
+
+/* line 249, ../../src/stylesheets/_input.scss */
+.ui.massive.input {
+  font-size: 1.5em;
+}
+
+/* line 16, ../../src/stylesheets/award-admin.scss */
+#enter-app-name {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  background: #f5f5f4;
+}
+
+/* line 26, ../../src/stylesheets/award-admin.scss */
+.pop-up {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 300px;
+  margin: -150px 0 0 -200px;
+  text-align: center;
+}
+
+/* line 40, ../../src/stylesheets/award-admin.scss */
+.suggestion-wp {
+  z-index: 6;
+  background: #fff;
+  color: #999;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+}
+/* line 46, ../../src/stylesheets/award-admin.scss */
+.suggestion-wp li {
+  padding: 8px 10px;
+  font-size: 14px;
+}
+/* line 50, ../../src/stylesheets/award-admin.scss */
+.suggestion-wp li.current {
+  background: #95c60e;
+  color: #fff;
+}
+
+/* line 57, ../../src/stylesheets/award-admin.scss */
+#back-to-admin-home {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+}
+/* line 71, ../../src/stylesheets/award-admin.scss */
+#back-to-admin-home i {
+  font-size: 20px;
+}
+/* line 75, ../../src/stylesheets/award-admin.scss */
+#back-to-admin-home i:before {
+  margin: 0;
+}
+
+/* line 82, ../../src/stylesheets/award-admin.scss */
+#editor #editor-head {
+  height: 400px;
+  background: #eee;
 }

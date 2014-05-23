@@ -8,5 +8,82 @@
 @import "header";
 @import "sidebar";
 @import "footer";
+@import "input";
 
+// ==========
+// Editor
+// ==========
+#enter-app-name {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    background: #f5f5f4;
+}
 
+.pop-up {
+    @include box-sizing(border-box);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 300px;
+    margin: -150px 0 0 -200px;
+    // padding: 10px;
+    // background: #fff;
+    text-align: center;
+}
+
+.suggestion-wp {
+    z-index: 6;
+    background: #fff;
+    color: #999;
+    box-shadow: 0 0 1px rgba(0,0,0,0.4);
+
+    li {
+        padding: 8px 10px;
+        font-size: 14px;
+
+        &.current {
+            background: #95c60e;
+            color: #fff;
+        }
+    }
+}
+
+#back-to-admin-home {
+    @include inline-block();
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 4;
+    width: 50px;
+    height: 50px;
+    background: rgba(0,0,0,0.8);
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+
+    i {
+        font-size: 20px;
+    }
+
+    i:before {
+        margin: 0;
+    }
+}
+
+#editor {
+
+    #editor-head {
+        height: 400px;
+        background: #eee;
+        // font-size: 30px;
+        // font-weight: 700;
+        // line-height: 1.78
+    }
+}

@@ -4,117 +4,50 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-23 02:37:36
+* @Last Modified time: 2014-05-23 15:40:49
 */
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to match all subfolders:
-// 'test/spec/**/*.js'
-
-var lrSnippet = require('connect-livereload')();
-var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest;
-
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
 
 module.exports = function (grunt) {
 
-    require('time-grunt')(grunt);
+    // require('time-grunt')(grunt);
 
     // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-    // grunt.loadNpmTasks('grunt-contrib-compass');
-    // grunt.loadNpmTasks('grunt-contrib-jshint');
-    // grunt.loadNpmTasks('grunt-contrib-concat');
-    // grunt.loadNpmTasks('grunt-contrib-uglify');
-    // grunt.loadNpmTasks('grunt-manifest');
-
-    // configurable paths
-    var pathConfig = {
-        app : 'app',
-        dist : 'dist',
-        tmp : '.tmp',
-        test : 'test'
-    };
+    // require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-parallel');
+    // grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    // grunt.loadNpmTasks('grunt-express');
+    grunt.loadNpmTasks('grunt-supervisor');
+    grunt.loadNpmTasks('grunt-contrib-compass');
 
     grunt.initConfig({
-        paths : pathConfig,
 
-        express: {
-            options: {
-                // Override defaults here
-                background: false,
-            },
-            web: {
+        supervisor: {
+            target: {
+                script: './bin/www',
                 options: {
-                    script: './bin/www',
-                }
-            },
-        },
-
-        watch : {
-            compass : {
-                files : ['<%= paths.app %>/src/stylesheets/{,*/}*/{,*/}*.{scss,sass,png,ttf}'],
-                tasks : ['compass:dist']
-            },
-            // stencil : {
-            //     files : ['<%= paths.app %>/**/*.html'],
-            //     tasks : ['stencil:server'],
-            //     options : {
-            //         spawn : false
-            //     }
-            // },
-            statics : {
-                files : ['<%= paths.app %>/src/assets/*.*'],
-                tasks : ['copy:server'],
-                options : {
-                    spawn : false
-                }
-            },
-            livereload: {
-                files: [
-                    '<%= paths.app %>/routes/*.js',
-                    '<%= paths.app %>/src/images/*.*',
-                    '<%= paths.app %>/src/stylesheets/*.css',
-                    '<%= paths.app %>/src/stylesheets/**/*.css',
-                    '<%= paths.app %>/src/javascripts/**/*.css',
-                    '<%= paths.app %>/views/*.jade'
-                ],
-                options : {
-                    livereload : true,
-                    spawn : false
+                    // exec: 'node',
+                    // forceSync: true
                 }
             }
         },
 
-        // connect : {
-        //     options : {
-        //         port : 3001,
-        //         hostname : '0.0.0.0'
-        //     },
-
-        //     server : {
-        //         options : {
-        //             middleware : function (connect) {
-        //                 return [
-        //                     lrSnippet,
-        //                     rewriteRulesSnippet,
-        //                     mountFolder(connect, pathConfig.tmp),
-        //                     mountFolder(connect, pathConfig.app)
-        //                 ];
-        //             }
-        //         }
-        //     }
-        // },
+        compass : {
+            server: {
+                options: {
+                    sassDir: 'app/src/stylesheets',
+                    cssDir: 'app/public/css'
+                }
+            }
+        },
 
         clean : {
             // dist : ['<%= paths.app %>/css', '<%= paths.app %>/js'],
             server : {
-                src : ['<%= paths.app %>/public/css', '<%= paths.app %>/public/img', '<%= paths.app %>/public/js']
+                src : ['app/public/css', 'app/public/img', 'app/public/js']
             }
         },
 
@@ -123,8 +56,8 @@ module.exports = function (grunt) {
                 files : [{
                     expand : true,
                     dot : true,
-                    cwd : '<%= paths.app %>/src/images',
-                    dest : '<%= paths.app %>/public/img',
+                    cwd : 'app/src/images',
+                    dest : 'app/public/img',
                     src : [
                         '**/*.*'
                     ]
@@ -132,135 +65,71 @@ module.exports = function (grunt) {
             },
         },
 
-        supervisor: {
-            target: {
-                script: './bin/www',
+        watch: {
+            frontend: {
                 options: {
-                    exec: 'node',
-                    forceSync: true
-                }
-            }
-        },
-
-        concurrent: {
-            autoreload: {
-                tasks: ['supervisor', 'watch']
+                    livereload: true
+                },
+                files: [
+                    'app/public/css/*.css',
+                    'app/public/img/**/*',
+                    'app/views/*.jade',
+                ],
+                // tasks: [
+                //     'clean:server',
+                //     'copy:server',
+                // ]
             },
-            server : ['copy:server', 'compass:dist'],
-            // staging : ['copy:dist', 'compass:staging', 'copy:statics', 'copy:oldStyles', 'copy:js'],
-            // dist : ['copy:dist', 'compass:dist', 'copy:js']
-        },
-
-
-        compass : { // Task
-            // server : { // eneratedImages
-            //     options : {
-            //         generatedImagesDir : '<%= paths.app %>/public/img',
-            //         debugInfo : true
-            //     }
-            // },
-
-            dist: { // Target
-                options: { // Target options
-                    sassDir: '<%= paths.app %>/src/stylesheets',
-                    cssDir: '<%= paths.app %>/public/css'
+            stylesSass: {
+                files: [
+                    'app/src/stylesheets/*.scss'
+                ],
+                tasks: [
+                    'compass:server'
+                ]
+            },
+            web: {
+                files: [
+                    'app/routes/*.js',
+                    'app.js'
+                ],
+                tasks: [
+                    // 'express:web'
+                    'supervisor:target'
+                ],
+                options: {
+                    nospawn: true, //Without this option specified express won't be reloaded
+                    atBegin: true,
                 }
             }
         },
 
-
-        jshint: {
-            all: ['src/**/*.js'],
-            test : ['<%= paths.app %>/src/javascripts/**/*.js']
-        },
-
-        // uglify: {
-        //     options: {
-        //         beautify: true,
-        //         stats: true,
-        //         report: 'min'
-        //     },
-        //     my_target: {
-        //         files: {
-        //             'public/js/scripts.min.js': '<%= concat.dist.dest %>'
-        //         }
-        //     }
-        // },
-
-        // concat: {
-        //     options: {
-        //         separator: ';'
-        //     },
-        //     dist: {
-        //         src: ['src/scripts/plugins.js', 'src/scripts/main.js'],
-        //         dest: 'public/js/scripts.js'
-        //     }
-        // },
-
-        // manifest: {
-        //     generate: {
-        //         options: {
-        //             basePath: 'public/',
-        //             preferOnline: true,
-        //             verbose: true,
-        //             timestamp: true
-        //         },
-        //         src: [
-        //             '**'
-        //         ],
-        //         dest: 'public/manifest.appcache'
-        //     }
-        // },
         parallel: {
             web: {
                 options: {
                     stream: true
                 },
-                tasks: [
-                    {
-                        grunt: true,
-                        args: ['watch:frontend']
-                    }, {
-                        grunt: true,
-                        args: ['watch:stylesSass']
-                    }, {
-                        grunt: true,
-                        args: ['watch:web']
-                    }
-                ]
+                tasks: [{
+                    grunt: true,
+                    args: ['watch:frontend']
+                }, {
+                    grunt: true,
+                    args: ['watch:stylesSass']
+                }, {
+                    grunt: true,
+                    args: ['watch:web']
+                }]
             },
         },
-
     });
 
-    grunt.registerTask('web', [
-        // 'parallel:web',
-        // 'open:server',
-        // 'express:web',
-        'concurrent:autoreload'
-    ]);
-
-
-    grunt.registerTask('server', [
+    grunt.registerTask('web', 'launch webserver and watch tasks', [
         'clean:server',
-        'concurrent:server',
-        'configureRewriteRules',
-        'connect:server',
-        // 'stencil:server',
-        // 'open',
-        'watch'
+        'copy:server',
+        'compass:server',
+        'parallel:web'
     ]);
 
-    grunt.registerTask('test', [
-        'jshint:test'
-    ]);
 
-    grunt.registerTask('dev', [
-        'compass',
-        'jshint',
-        'concat',
-        'uglify',
-        'manifest'
-    ]);
-
+    grunt.registerTask('default', ['web']);
 };

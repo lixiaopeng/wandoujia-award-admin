@@ -2,13 +2,31 @@ extends layout
 
 block content
 
-    include header
+    //- include header
 
-    #main
+    #main.editor-page
 
-        article#content
-            h1 New Article
+        a#back-to-admin-home(href='/admin')
+            i.entypo-home
 
+        #enter-app-name
+            .pop-up
+                .ui.input.massive.action.fluid
+                    input#search-input(type='text', placeholder='Enter the App name please', autofocus='autofocus')
+                    .ui.button
+                        i.entypo-search
 
+                #app-box
 
-    //- include footer
+                button.ui.button.big.green.disabled.hide(type='submit') ok
+
+        #content
+            #editor
+                header#editor-head
+                    #cover-wrap
+                    #article-header
+                        h1 APP Name
+                        h2 Article Tilte
+                article.container
+                    | 在这里写文章<br><br>锡兰，哈内克，格斯范桑，<br><br>PTA，科恩兄弟，大卫林奇，杨德昌，阿莫多瓦，墨镜王，莫莱蒂，迈克李<br>，罗伯奥<br><br>特曼，维姆文德<br><br>斯，库斯图里卡，斯<br>科塞斯，布列松，塔科夫斯基，赫<br><br>尔佐格，泰<br><br><br><br><br>伦斯马力克。<br><br><br><br>他们都是戛纳最<br><br>佳导演<br>奖得主，一想到多兰<br><br>明天有可能加入这个<br><br>行列成为最年轻<br>的，永载史<br><br><br><br><br>册，就激动啊！~
+
