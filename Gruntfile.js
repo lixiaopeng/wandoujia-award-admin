@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-22 21:31:54
+* @Last Modified time: 2014-05-23 02:37:36
 */
 
 // # Globbing
@@ -44,6 +44,18 @@ module.exports = function (grunt) {
     grunt.initConfig({
         paths : pathConfig,
 
+        express: {
+            options: {
+                // Override defaults here
+                background: false,
+            },
+            web: {
+                options: {
+                    script: './bin/www',
+                }
+            },
+        },
+
         watch : {
             compass : {
                 files : ['<%= paths.app %>/src/stylesheets/{,*/}*/{,*/}*.{scss,sass,png,ttf}'],
@@ -79,25 +91,25 @@ module.exports = function (grunt) {
             }
         },
 
-        connect : {
-            options : {
-                port : 3001,
-                hostname : '0.0.0.0'
-            },
+        // connect : {
+        //     options : {
+        //         port : 3001,
+        //         hostname : '0.0.0.0'
+        //     },
 
-            server : {
-                options : {
-                    middleware : function (connect) {
-                        return [
-                            lrSnippet,
-                            rewriteRulesSnippet,
-                            mountFolder(connect, pathConfig.tmp),
-                            mountFolder(connect, pathConfig.app)
-                        ];
-                    }
-                }
-            }
-        },
+        //     server : {
+        //         options : {
+        //             middleware : function (connect) {
+        //                 return [
+        //                     lrSnippet,
+        //                     rewriteRulesSnippet,
+        //                     mountFolder(connect, pathConfig.tmp),
+        //                     mountFolder(connect, pathConfig.app)
+        //                 ];
+        //             }
+        //         }
+        //     }
+        // },
 
         clean : {
             // dist : ['<%= paths.app %>/css', '<%= paths.app %>/js'],
@@ -120,7 +132,20 @@ module.exports = function (grunt) {
             },
         },
 
+        supervisor: {
+            target: {
+                script: './bin/www',
+                options: {
+                    exec: 'node',
+                    forceSync: true
+                }
+            }
+        },
+
         concurrent: {
+            autoreload: {
+                tasks: ['supervisor', 'watch']
+            },
             server : ['copy:server', 'compass:dist'],
             // staging : ['copy:dist', 'compass:staging', 'copy:statics', 'copy:oldStyles', 'copy:js'],
             // dist : ['copy:dist', 'compass:dist', 'copy:js']
@@ -186,8 +211,34 @@ module.exports = function (grunt) {
         //         dest: 'public/manifest.appcache'
         //     }
         // },
+        parallel: {
+            web: {
+                options: {
+                    stream: true
+                },
+                tasks: [
+                    {
+                        grunt: true,
+                        args: ['watch:frontend']
+                    }, {
+                        grunt: true,
+                        args: ['watch:stylesSass']
+                    }, {
+                        grunt: true,
+                        args: ['watch:web']
+                    }
+                ]
+            },
+        },
 
     });
+
+    grunt.registerTask('web', [
+        // 'parallel:web',
+        // 'open:server',
+        // 'express:web',
+        'concurrent:autoreload'
+    ]);
 
 
     grunt.registerTask('server', [

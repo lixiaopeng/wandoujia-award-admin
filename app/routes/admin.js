@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 16:46:34
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-22 21:27:37
+* @Last Modified time: 2014-05-23 02:22:50
 */
 
 var express = require('express');
@@ -12,9 +12,9 @@ var router = express.Router();
 
 
 router.get('/', function (req, res) {
-    // res.send('respond with a resource');
+    res.send('respond with a resource');
     // res.render('index', { title: 'Express' });
-    res.redirect('/admin/articles');
+    // res.redirect('/admin/articles');
 });
 
 router.get('/articles', function (req, res) {
