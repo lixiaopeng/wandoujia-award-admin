@@ -2,16 +2,16 @@ extends layout
 
 block content
 
-    include header
+    include templates/header
 
     #main
 
-        include sidebar
+        include templates/sidebar
 
         article#content
             .container
                 h1 All Drafts
-                include drafts-list
+                include templates/drafts-list
 
 
 

@@ -1,0 +1,18 @@
+script#app-search-list-tpl(type='text/template')
+    | <% if(appList.length > 0) { %>
+    | <% _.each(appList, function(app) { %>
+    |     <li class='app-card' data-package='<%= app.packageName %>'>
+    |         <div class='app-icon-wrap'>
+    |             <img class='app-icon' src='<%= app.icons.px48 %>'>
+    |         </div>
+    |         <div class='app-info'>
+    |             <h3><%= app.title %></h3>
+    |             <p><%= app.description %></p>
+    |         </div>
+    |     </li>
+    | <% }); %>
+    | <% } else { %>
+    |     <p class='no-data'>
+    |         没有结果
+    |     </p>
+    | <% } %>
