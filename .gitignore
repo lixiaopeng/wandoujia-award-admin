@@ -6,7 +6,10 @@
 *.log
 
 /node_modules/
-/app/components
+/app/public/css
+/app/public/js
+/app/public/img
+/app/src/components
 /dist/
 /test/output/
 /.sass-cache/

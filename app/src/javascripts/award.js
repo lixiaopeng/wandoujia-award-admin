@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-24 15:20:14
+* @Last Modified time: 2014-05-25 11:42:09
 */
 
 $(function () {
@@ -102,9 +102,10 @@ $(function () {
         alert('出错了');
     }
 
+    // 页面刷新
     window.onbeforeunload = function (e) {
         if (isEditing) {
-            return 'Dialog text here.';
+            return '文章还没有保存';
         }
     };
 });

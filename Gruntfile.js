@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-23 15:40:49
+* @Last Modified time: 2014-05-26 16:53:01
 */
 
 
@@ -27,7 +27,7 @@ module.exports = function (grunt) {
 
         supervisor: {
             target: {
-                script: './bin/www',
+                script: 'bin/www',
                 options: {
                     // exec: 'node',
                     // forceSync: true
