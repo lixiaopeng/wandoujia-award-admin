@@ -10,6 +10,7 @@
   "devDependencies": {
     "jquery": "~2.1.1",
     "modernizr": "~2.8.1",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "pen": "~0.0.3"
   }
 }

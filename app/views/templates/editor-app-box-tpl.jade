@@ -7,8 +7,8 @@ script#editor-app-box-tpl(type='text/template')
     p <%= description %>
 
     | <% if(screenshots.small.length > 0) { %>
-    | <div class='screenshot'>
-    | <ul>
+    | <div class='screenshot-wrap'>
+    | <ul class='screenshot-list'>
     | <% _.each(screenshots.small, function(screenshot) { %>
     |     <li>
     |         <img src='<%= screenshot %>'>

@@ -23,6 +23,7 @@ html.no-js(lang='en')
 
         //- build:css(.tmp) /stylesheets/award-admin.min.css
         link(rel='stylesheet', href='/css/award-admin.css')
+        link(rel='stylesheet', href='/src/components/pen/src/pen.css')
         //- endbuild
 
     body
@@ -37,6 +38,8 @@ html.no-js(lang='en')
         //- build:js(app) /javascripts/award-pack.js
         script(src='/src/components/jquery/dist/jquery.js')
         script(src='/src/components/underscore/underscore.js')
+        script(src='/src/components/pen/src/pen.js')
+        script(src='/src/components/pen/src/markdown.js')
         script(src='/src/javascripts/suggestion.js')
         script(src='/src/javascripts/award.js')
         //- endbuild
