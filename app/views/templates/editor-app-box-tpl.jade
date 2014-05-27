@@ -1,5 +1,21 @@
+- var iconSrc =
 script#editor-app-box-tpl(type='text/template')
     .app-icon-wrap
+    |    <img src='<%= icons.px48 %>'>
 
     h3 <%= title %>
+    p <%= description %>
+
+    | <% if(screenshots.small.length > 0) { %>
+    | <div class='screenshot'>
+    | <ul>
+    | <% _.each(screenshots.small, function(screenshot) { %>
+    |     <li>
+    |         <img src='<%= screenshot %>'>
+    |     </li>
+    | <% }); %>
+    | </ul>
+    | </div>
+    | <% } %>
+
 
