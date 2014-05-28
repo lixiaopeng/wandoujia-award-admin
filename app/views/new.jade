@@ -2,8 +2,6 @@ extends layout
 
 block content
 
-    //- include header
-
     #main.editor-page
 
         a#back-to-admin-home(href='/admin/')
@@ -11,8 +9,7 @@ block content
 
         #content
             #editor
-                .container
-                    #app-box
+                #app-box.container
 
                 article#article-content.container
                     | 在这里写文章

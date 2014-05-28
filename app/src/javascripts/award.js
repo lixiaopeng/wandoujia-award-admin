@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-28 01:49:02
+* @Last Modified time: 2014-05-28 21:41:29
 */
 
 $(function () {
@@ -96,23 +96,25 @@ $(function () {
         heroCoverSubmitHandle();
 
         // 初始化编辑器
-
+        // 可编辑 APP 名称
         var appTitlePenOptions = {
             editor: document.getElementById('app-title'),
             class: 'pen1',
             debug: true,
             textarea: '<input name="app-title" />',
-            list: ['bold', 'italic', 'underline']
+            list: null
         };
 
+        // 可编辑文章标题
         var articleTitlePenOptions = {
             editor: document.getElementById('article-title'),
             class: 'pen2',
             debug: true,
             textarea: '<input name="article-title" />',
-            list: ['bold', 'italic', 'underline']
+            list: null
         };
 
+        // 可编辑文章内容
         var articleContentPenOptions = {
             editor: document.getElementById('article-content'),
             class: 'pen',
@@ -120,6 +122,7 @@ $(function () {
             textarea: '<textarea name="article-content"></textarea>',
             list: ['bold', 'italic', 'underline']
         };
+
 
         var appTitlePen = new Pen(appTitlePenOptions);
         var artileTitlePen = new Pen(articleTitlePenOptions);
@@ -149,7 +152,9 @@ $(function () {
 
     // 顶部图片提交处理
     function heroCoverSubmitHandle() {
-        $('#hero-cover-submit-btn').click(function () {
+        $('#hero-cover-input-wrap').submit(function () {
+            event.preventDefault();
+
             var inputPath = $('#hero-cover-input').val();
 
             // 验证是否为图片
@@ -161,7 +166,32 @@ $(function () {
                     'background-image': 'url(' + inputPath + ')'
                 });
             }
+
+            // 显示/隐藏 输入框
+            toggleCoverInput();
+
+            return false;
         });
+
+        var chageCoverBtn = $('#change-cover');
+        chageCoverBtn.click(function () {
+            // 显示/隐藏 输入框
+            toggleCoverInput();
+        });
+    }
+
+    function toggleCoverInput() {
+        var input = $('#hero-cover-input-wrap');
+        var chageCoverBtn = $('#change-cover');
+        var isHidden = input.is(':hidden');
+
+        if (isHidden) {
+            input.show();
+            chageCoverBtn.hide();
+        } else {
+            input.hide();
+            chageCoverBtn.show();
+        }
     }
 
     function showError() {

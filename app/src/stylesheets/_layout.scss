@@ -1,5 +1,6 @@
 @import "button";
 @import "vars";
+@import "mediaQueries";
 
 @import url(http://weloveiconfonts.com/api/?family=entypo);
 
@@ -105,6 +106,42 @@ h4 {
 }
 
 .container {
-    width: 700px;
+    width: 800px;
     margin: 0 auto;
+}
+
+
+
+@include max-screen(1024px) {
+    .container {
+        width: 800px;
+    }
+}
+
+@include max-screen(900px) {
+    .container {
+        width: 700px;
+    }
+}
+
+@include max-screen(768px) {
+    .container {
+        width: auto;
+        margin: 0 50px;
+    }
+}
+
+
+@include max-screen(500px) {
+    .container {
+        width: auto;
+        margin: 0 10px;
+    }
+}
+
+@include max-screen(310px) {
+    .container {
+        width: auto;
+        margin: 0 10px;
+    }
 }
