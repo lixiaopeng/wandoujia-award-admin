@@ -7,7 +7,7 @@ script#app-search-list-tpl(type='text/template')
     |         </div>
     |         <div class='app-info'>
     |             <h3><%= app.title %></h3>
-    |             <p><%= app.description %></p>
+    |             <p><%= app.description.substr(0, 50) %></p>
     |         </div>
     |     </li>
     | <% }); %>

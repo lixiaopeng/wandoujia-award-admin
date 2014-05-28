@@ -152,12 +152,27 @@
 
     // 顶部
     #editor-head {
+        position: relative;
         height: 400px;
         background: #bbb;
+
+        .container {
+            position: relative;
+        }
     }
 
-    #hero-cover {
+    #hero-cover-input-wrap {
 
+    }
+
+    #cover-wrap {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: center center no-repeat;
+        background-size: cover;
     }
 }
 
@@ -187,7 +202,7 @@
     }
 }
 
-#editor-article {
+#article-content {
     margin-top: 30px;
     min-height: 500px;
 }
