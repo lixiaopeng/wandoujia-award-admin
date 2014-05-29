@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-28 21:41:29
+* @Last Modified time: 2014-05-29 19:14:45
 */
 
 $(function () {
@@ -162,9 +162,7 @@ $(function () {
                 alert('图片类型必须是.gif,jpeg,jpg,png中的一种');
                 return;
             } else {
-                $('#cover-wrap').css({
-                    'background-image': 'url(' + inputPath + ')'
-                });
+                $('#cover-wrap img').attr('src', inputPath);
             }
 
             // 显示/隐藏 输入框
@@ -173,7 +171,7 @@ $(function () {
             return false;
         });
 
-        var chageCoverBtn = $('#change-cover');
+        var chageCoverBtn = $('#change-cover .button');
         chageCoverBtn.click(function () {
             // 显示/隐藏 输入框
             toggleCoverInput();

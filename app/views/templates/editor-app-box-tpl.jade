@@ -1,20 +1,35 @@
 script#editor-app-box-tpl(type='text/template')
     | <div class='app-icon-wrap'>
     |    <img src='<%= icons.px100 %>'>
+    |    <div class='ui button green small'>下载</div>
     | </div>
 
-    h3 <%= title %>
-    p <%= description %>
+    .app-info
+        h3 <%= title %>
+        num-list
+            span.item
+                i(itemprop='interactionCount', content='UserDownloads:13809')
+                    22
+                b 人安装
+            span.like
+                i(itemprop='interactionCount', content='UserDownloads:13809')
+                    22
+                b 人喜欢
+
+        p <%= tagline %>
 
     | <% if(screenshots.small.length > 0) { %>
     | <div class='screenshot-wrap'>
-    | <ul class='screenshot-list'>
-    | <% _.each(screenshots.small, function(screenshot) { %>
-    |     <li>
-    |         <img src='<%= screenshot %>'>
-    |     </li>
-    | <% }); %>
-    | </ul>
+    |     <h4><%= title %> 截图</h4>
+    |     <div class='screenshot-list-wrap'>
+    |         <ul class='screenshot-list'>
+    |         <% _.each(screenshots.small, function(screenshot) { %>
+    |             <li>
+    |                 <img src='<%= screenshot %>'>
+    |             </li>
+    |         <% }); %>
+    |         </ul>
+    |     </div>
     | </div>
     | <% } %>
 
