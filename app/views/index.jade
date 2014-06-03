@@ -11,7 +11,10 @@ block content
         article#content
             .container
                 h1 All Artiles
-                include templates/articles-list
+                ul
+                    each article in articles
+                        li= article
+
 
 
 

@@ -1,0 +1,112 @@
+
+/* -------------------------- */
+/* Faded gradient */
+/* -------------------------- */
+
+.intro-effect-fadeout:not(.notrans) .bg-img {
+    @include transition-property(transform);
+}
+
+.intro-effect-fadeout:not(.notrans) .bg-img::after {
+    @include transition-property(opacity);
+}
+
+.intro-effect-fadeout:not(.notrans) #header-content {
+    @include transition-property(transform);
+
+    h1,
+    h2 {
+        @include transition-property(color);
+    }
+}
+
+// .intro-effect-fadeout:not(.notrans) .header p,
+.intro-effect-fadeout:not(.notrans) #editor-body {
+    @include transition-property(transform);
+}
+
+.intro-effect-fadeout:not(.notrans) .bg-img,
+.intro-effect-fadeout:not(.notrans) .bg-img::after,
+.intro-effect-fadeout:not(.notrans) #header-content,
+.intro-effect-fadeout:not(.notrans) #header-content h1,
+.intro-effect-fadeout:not(.notrans) #header-content h2,
+// .intro-effect-fadeout:not(.notrans) .header p,
+.intro-effect-fadeout:not(.notrans) #editor-body {
+    @include transition-duration(0.5s);
+}
+
+// .intro-effect-fadeout .header {
+//     overflow: hidden;
+// }
+
+.intro-effect-fadeout.modify .bg-img {
+    @include transform(translate3d(0, -150px, 0));
+}
+
+.intro-effect-fadeout .bg-img::after {
+    @include background-image(linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%));
+    @include opacity(0);
+
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.intro-effect-fadeout.modify .bg-img::after {
+    @include opacity(1);
+}
+
+.intro-effect-fadeout.modify #header-content {
+    @include background-image(none);
+    @include transform(translate3d(0, 50px, 0));
+
+    h1,
+    h2 {
+        @include text-shadow(none);
+
+        color: #444;
+    }
+}
+
+// .intro-effect-fadeout .title {
+//     text-align: left;
+//     max-width: 900px;
+// }
+
+
+// .intro-effect-fadeout .header p {
+//     opacity: 0;
+// }
+
+// .intro-effect-fadeout .header p:nth-child(2) {
+//     @include transform(translateX(150px));
+// }
+
+// .intro-effect-fadeout .header p:nth-child(3) {
+    // @include transform(translateX(150px));
+// }
+
+// .intro-effect-fadeout.modify .header p:nth-child(2),
+// .intro-effect-fadeout.modify .header p:nth-child(3) {
+//     @include opacity(1);
+//     @include transform(translateX(0));
+// }
+
+// .intro-effect-fadeout .content {
+//     z-index: 1000;
+//     position: relative;
+// }
+
+.intro-effect-fadeout #editor-body{
+    // @include opacity(0);
+    @include transform(translate3d(0, 0, 0));
+}
+
+.intro-effect-fadeout.modify #editor-body {
+    // @include opacity(1);
+    @include transform(translate3d(0, -100px, 0));
+}

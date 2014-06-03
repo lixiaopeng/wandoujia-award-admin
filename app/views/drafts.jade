@@ -11,7 +11,10 @@ block content
         article#content
             .container
                 h1 All Drafts
-                include templates/drafts-list
+                ul
+                    each draft in drafts
+                        li= draft
+
 
 
 

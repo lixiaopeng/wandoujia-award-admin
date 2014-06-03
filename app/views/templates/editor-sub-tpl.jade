@@ -1,0 +1,85 @@
+//- Templates for Editor
+
+
+//- ++++++++++++++
+//- Editor Header Template
+//- ++++++++++++++
+script#editor-header-tpl(type='text/template')
+    header#editor-head.bg-img
+        #cover-wrap
+            img(src='http://37.media.tumblr.com/a0b93d60be831e75effaed6e3a4db7b7/tumblr_n381e8QTLE1st5lhmo1_1280.jpg')
+
+        #cover-form
+            .container
+
+                form#hero-cover-input-wrap.ui.input.massive.fluid
+                        input#hero-cover-input(type='text', placeholder='在这里填写顶部图片的URL')
+                        #hero-cover-submit-btn
+                            button(type='submit')
+                #change-cover
+                    .ui.button.green
+                        | 更换封面图片
+
+        #header-content
+            .container
+                h1#app-title <%= title %>
+                h2#article-title 在这里输入标题
+
+
+
+//- ++++++++++++++
+//- APP box Template
+//- ++++++++++++++
+script#editor-app-box-tpl(type='text/template')
+    | <div class='app-icon-wrap'>
+    |    <img src='<%= icons.px100 %>'>
+    | </div>
+
+    .app-info
+        h3(contenteditable='true') <%= title %>
+        .num-list
+            span.item.installed
+                | <i itemprop='interactionCount', content='UserDownloads:<%= installedCount %>'> <%= installedCountStr %> </i>
+                b 人安装
+            span.item.liked
+                i <%= likesCount %>
+                b 人喜欢
+            span.item.commented.last
+                i <%= commentsCount %>
+                b 人评论
+
+        p(contenteditable='true') <%= tagline %>
+        .ui.button.green.small 下 载
+
+    | <% if(screenshots.normal.length > 0) { %>
+    | <div class='screenshot-wrap'>
+    |     <h4><%= title %> 截图</h4>
+    |     <div class='screenshot-list-wrap'>
+    |         <ul class='screenshot-list'>
+    |         <% _.each(screenshots.normal, function(screenshot) { %>
+    |             <li>
+    |                 <img itempro='screenshot' alt='<%= title %>' src='<%= screenshot %>' onmousedown='return false;'>
+    |             </li>
+    |         <% }); %>
+    |         </ul>
+    |     </div>
+    | </div>
+    | <% } %>
+
+
+
+//- ++++++++++++++
+//- Commment box Template
+//- ++++++++++++++
+script#editor-comment-box-tpl(type='text/template')
+    .comment-box
+        | <a class='comment-author-avatar' href='http://www.wandoujia.com/user/<%= author.id %>', target='_blank'>
+        |     <img  alt='<%= author.name %>' src='<%= author.avatar %>'>
+        | </a>
+
+        .comment-info
+            span.comment-author-name
+                | <a href='http://www.wandoujia.com/user/<%= author.id %>', target='_blank'><%= author.name %></a>
+
+            p.comment-content(contenteditable='true') <%= content %>
+

@@ -1,6 +1,7 @@
 @import "button";
 @import "vars";
-@import "mediaQueries";
+@import "media-queries";
+@import "intro-effect";
 
 @import url(http://weloveiconfonts.com/api/?family=entypo);
 
@@ -13,10 +14,10 @@ a {
     }
 }
 
-html,
-body {
-    height: 100%;
-}
+// html,
+// body {
+//     height: 100%;
+// }
 
 body {
     background-color: #fff;
@@ -78,6 +79,29 @@ h4 {
     float: right;
 }
 
+// over write pen.css
+.pen p,
+.pen pre,
+.pen ul,
+.pen ol,
+.pen dl,
+.pen form,
+.pen table,
+.pen blockquote {
+    margin-bottom: 0;
+}
+
+.pen h1,
+.pen h2,
+.pen h3,
+.pen h4,
+.pen h5 {
+    font-size: 1.3em;
+    margin-bottom: 0;
+    padding: 1.2em 0;
+}
+
+// start
 #main {
     position: absolute;
     top: 60px;
@@ -100,7 +124,14 @@ h4 {
     top: 0;
 }
 
+#main.editing {
+    position: relative;
+    top: 0;
+    bottom: auto;
+}
+
 #main.editor-page #content {
+    position: relative;
     left: 0;
     padding: 0;
 }

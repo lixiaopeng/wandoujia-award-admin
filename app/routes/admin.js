@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 16:46:34
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-23 16:27:10
+* @Last Modified time: 2014-06-03 20:30:19
 */
 
 var express = require('express');
@@ -40,6 +40,25 @@ router.get('/drafts', function (req, res) {
 router.get('/articles/new', function (req, res) {
     // res.send('respond with a resource');
     res.render('new', { title: 'Express' });
+});
+
+router.post('/articles/new', function (req, res) {
+    res.json({
+        text : 'respond with a resource'
+    });
+    // res.render('new', { title: 'Express' });
+});
+
+router.get('/fake/comment', function (req, res) {
+    res.json({
+            id: 7083462,
+            content: '虽然用的频率没有以前那么多，可依然是必备的工具之一。在界面上已经越来越漂亮的，希望功能上可以继续提升。',
+            author: {
+                id: 19222047, //评论作者ID，来自账号系统
+                name: '旁木花生', //评论作者名字
+                avatar: 'http://account.wandoujia.com/avatar?uid=19222047&size=MIDDLE', //评论作者头像，暂无数据
+            },
+        });
 });
 
 module.exports = router;

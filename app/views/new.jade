@@ -2,18 +2,45 @@ extends layout
 
 block content
 
-    #main.editor-page
+    #main.editor-page.intro-effect-fadeout
 
         a#back-to-admin-home(href='/admin/')
             i.entypo-home
 
+        ul#page-action
+            li#draft-btn.ui.button 保存草稿
+            li#publish-btn.ui.button 直接发布
+
         #content
+            //- 编辑区
             #editor
-                #app-box.container
+                #editor-body
 
-                article#article-content.container
-                    | 在这里写文章
+                    //- APP 信息
+                    #app-box.container
 
+                    #article-content-wrap.container
+                        //- 小工具
+                        #editor-tools
+                            ul
+                                li
+                                    span 插入用户评论
+                                    button.ui.button.icon#insert-comment(type='button', title='插入用户评论')
+                                        i.entypo-comment
+
+                                li
+                                    span 插入开发者访谈
+                                    button.ui.button.icon#insert-interview(type='button', title='插入开发者访谈')
+                                        i.entypo-chat
+                                li
+                                    span 插入图片
+                                    button.ui.button.icon#insert-pic(type='button', title='插入图片')
+                                        i.entypo-picture
+                        //- 正文
+                        article#article-content
+                            | 在这里写文章
+
+        //- 搜索层
         #search-app-overlay
             .pop-up
                 form#app-search-form
@@ -23,6 +50,38 @@ block content
                             i.entypo-search
                 ul#app-search-list
 
+        //- 编辑器中的 评论 访谈 模板
+        #insert-tpl
+            //- 评论模板
+            .comment-tpl-wrap(contenteditable='false')
+                .comment-tpl.edit-mode
+                    .box-action
+                        span.edit
+                            i.entypo-pencil
+                            |  修改
+                        span.remove
+                            i.entypo-cancel
+                            |  删除
+                    form.comment-id-input
+                        .ui.input.action
+                            input(type='text', placeholder='请输入目标评论的ID')
+                            button.ui.button(type='submit')
+                                i.entypo-plus-circled
+
+                    .comment-box-wrap
+
+
+            //- 访谈模板
+            .interview-tpl-wrap(contenteditable='false')
+                .interview-tpl.edit-mode
+                    .box-action
+                        span.edit 修改
+                        span.remove 删除
+                    .interview-uid-input.ui.input
+                        input(type='text', placeholder='请输入用户UID')
+
+    //- 搜索App时的搜索结果模板
     include templates/app-search-list-tpl
-    include templates/editor-header-tpl
-    include templates/editor-app-box-tpl
+
+    //- 编辑器中用到模板
+    include templates/editor-sub-tpl

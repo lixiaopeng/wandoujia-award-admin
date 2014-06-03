@@ -10,10 +10,10 @@ html.no-js(lang='en')
     //- <![endif]
 
     head
+        meta(charset='utf-8')
         meta(name='description', content='blah..blah...')
         meta(name='keywords', content='none,no')
         meta(name='author', content='J.Y Han(naoyeye)')
-        meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge, chrome=1')
         meta(name='apple-mobile-web-app-capable', content='yes')
 
@@ -22,8 +22,8 @@ html.no-js(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, user-scalable=no, minimal-ui')
 
         //- build:css(.tmp) /stylesheets/award-admin.min.css
-        link(rel='stylesheet', href='/css/award-admin.css')
         link(rel='stylesheet', href='/src/components/pen-naoyeye/src/pen.css')
+        link(rel='stylesheet', href='/css/award-admin.css')
         //- endbuild
 
     body
@@ -38,8 +38,10 @@ html.no-js(lang='en')
         //- build:js(app) /javascripts/award-pack.js
         script(src='/src/components/jquery/dist/jquery.js')
         script(src='/src/components/underscore/underscore.js')
+        script(src='/src/components/classie/classie.js')
         script(src='/src/components/pen-naoyeye/src/pen.js')
         script(src='/src/components/pen-naoyeye/src/markdown.js')
         script(src='/src/javascripts/suggestion.js')
         script(src='/src/javascripts/award.js')
+        //- script(src='/src/javascripts/intro-effect.js')
         //- endbuild
