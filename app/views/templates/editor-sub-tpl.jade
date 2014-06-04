@@ -53,7 +53,7 @@ script#editor-app-box-tpl(type='text/template')
 
     | <% if(screenshots.normal.length > 0) { %>
     | <div class='screenshot-wrap'>
-    |     <h4><%= title %> 截图</h4>
+    |     <h4 contenteditable='true'><%= title %> 截图</h4>
     |     <div class='screenshot-list-wrap'>
     |         <ul class='screenshot-list'>
     |         <% _.each(screenshots.normal, function(screenshot) { %>

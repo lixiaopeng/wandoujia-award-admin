@@ -272,6 +272,7 @@
         }
 
         p {
+            min-height: 23px;
             padding: 5px 0;
             font-size: 14px;
             outline: none;
@@ -347,7 +348,7 @@
 }
 
 #article-content {
-    margin-top: 30px;
+    padding-top: 30px;
     min-height: 500px;
     font: 18px/1.7 $font-base;
     color: $textNormal;

@@ -4,10 +4,19 @@
 * @Author: hanjiyun
 * @Date:   2014-05-30 12:52:36
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-30 13:12:51
+* @Last Modified time: 2014-06-04 16:18:13
 */
 
-function introEffect() {
+$(function () {
+    var docElem = window.document.documentElement;
+    var scrollVal;
+    var isRevealed;
+    var noscroll;
+    var isAnimating;
+    var container = document.getElementById('main');
+    // 'trigger' not used temporarily
+    var trigger = container.querySelector('button.trigger');
+
 
     // detect if IE : from http://stackoverflow.com/a/16657946
     var ie = (function () {
@@ -33,7 +42,8 @@ function introEffect() {
     // disable/enable scroll (mousewheel and keys) from http://stackoverflow.com/a/4770179
     // left: 37, up: 38, right: 39, down: 40,
     // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-    var keys = [32, 37, 38, 39, 40], wheelIter = 0;
+    var keys = [32, 37, 38, 39, 40];
+    var wheelIter = 0;
 
     function preventDefault(e) {
         e = e || window.event;
@@ -73,19 +83,12 @@ function introEffect() {
         window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
     }
 
-    var docElem = window.document.documentElement,
-        scrollVal,
-        isRevealed,
-        noscroll,
-        isAnimating,
-        container = document.getElementById('main'),
-        trigger = container.querySelector('button.trigger');
-
     function scrollY() {
         return window.pageYOffset || docElem.scrollTop;
     }
 
     function scrollPage() {
+
         scrollVal = scrollY();
 
         if (noscroll && !ie) {
@@ -120,7 +123,7 @@ function introEffect() {
         }
         else {
             noscroll = true;
-            disable_scroll();
+            // disable_scroll();
             classie.remove(container, 'modify');
         }
 
@@ -132,14 +135,14 @@ function introEffect() {
                 noscroll = false;
                 enable_scroll();
             }
-        }, 600);
+        }, 400);
     }
 
     // refreshing the page...
     var pageScroll = scrollY();
     noscroll = pageScroll === 0;
 
-    disable_scroll();
+    // disable_scroll();
 
     if (pageScroll) {
         isRevealed = true;
@@ -152,4 +155,4 @@ function introEffect() {
     // trigger.addEventListener('click', function () {
     //     toggle('reveal');
     // });
-}
+})

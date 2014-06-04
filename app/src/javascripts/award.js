@@ -1,15 +1,16 @@
-/*global $, Modernizr, require, _, __dirname, suggestion, Pen, module, classie, jQuery*/
+/*global $, Modernizr, require, _, __dirname, suggestion, Pen, module, classie, jQuery, mode*/
 
 /*
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-06-03 20:30:37
+* @Last Modified time: 2014-06-04 21:08:11
 */
 
 $(function () {
 
     var searchApi = 'http://apps.wandoujia.com/api/v1/search/';
+    var option = '?max=12&hasAd=0&start=0&opt_fields=description,likesCount,title,packageName,icons.px48,icons.px100,tagline,screenshots.normal,installedCountStr,installedCount,commentsCount,award.*';
     var searchAppOverlay = $('#search-app-overlay');
     var appSearchListTpl = $('#app-search-list-tpl');
     var editorHeaderTpl = $('#editor-header-tpl');
@@ -18,6 +19,8 @@ $(function () {
     var editorWrap = $('#editor');
     var article = $('#article-content');
     var isEditing = false;
+    var packageName;
+    var appName;
 
     var renderAppSearchListTpl = function (appList) {
         return (_.template(appSearchListTpl.html()))({appList: appList});
@@ -57,13 +60,69 @@ $(function () {
 
     // 发布文章
     $('#publish-btn').click(function () {
-        var markup = document.documentElement.innerHTML;
-        console.log(markup);
+
+        // 得到整个页面的html
+        var body = $(document.documentElement).clone();
+
+        // 删除 pageData 中的部分内容
+        body.find('#back-to-admin-home, #page-action, #cover-form, #editor-tools, #app-search-list-tpl, #editor-header-tpl, #editor-app-box-tpl, #editor-comment-box-tpl, .suggestion-wp, #insert-tpl, .box-action, .comment-id-input').remove();
+
+        // 删除可编辑状态
+        body.find('[contenteditable]').removeAttr('contenteditable');
+
+        // 重新组织JS
+        body.find('script').not('#current-mode').remove();
+        // todo
+        // 需要增加获取APP最新数据的API,否则最终输出的页面中，APP安装数量等数据都是旧的、静态的。
+        // 可以增加一个数字的动画效果，把旧的数据改写成API的新数据。
+        body.append('<script src="/src/components/jquery/dist/jquery.js"></script><script src="/src/components/classie/classie.js"></script><script src="/src/javascripts/intro-effect.js"></script>');
+
+        // 替换页面状态
+        // edit: 发布新文章 (默认)
+        // draft: 草稿
+        // article: 发布完成的文章
+        body.find('#current-mode').html('var mode = "article";');
+
+        // var pageData = document.documentElement.innerHTML;
+        var pageData = body.html();
+        // console.log('pageData', pageData);
+
+        // 补全HTML结构
+        pageData = '<!DOCTYPE html><html lang="en" class="no-js">' + pageData + '</html>';
+
+
+        // 设置路径名称
+        var directoryName = packageName;
 
         $.ajax({
             type: 'POST',
             url: '/admin/articles/new',
-            data : {data: markup},
+            data : {pageData: pageData, directoryName: directoryName},
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    });
+
+    // 保存草稿
+    $('#draft-btn').click(function () {
+
+        // 得到整个页面的html
+        // var pageData = document.documentElement.innerHTML;
+        var body = $(document.documentElement).clone();
+
+        // 替换页面状态
+        body.find('#current-mode').html('var mode = "draft";');
+
+        var pageData = body.html();
+
+        // 设置路径名称
+        var directoryName = packageName;
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/drafts/new',
+            data : {pageData: pageData, directoryName: directoryName, appName : appName},
             success: function (res) {
                 console.log(res);
             }
@@ -76,7 +135,7 @@ $(function () {
     function getAppinfoByName(name, selectedOneApp) {
         $.ajax({
             type: 'GET',
-            url: searchApi + name,
+            url: searchApi + name + option,
             success: function (data) {
                 // console.log('data', data);
 
@@ -87,7 +146,7 @@ $(function () {
                 } else {
 
                     // todo
-                    // show loading
+                    showLoading();
 
                     // 得到用户选定的 app 信息，插入到编辑页面模板中
                     renderEditPage(data);
@@ -95,6 +154,8 @@ $(function () {
             }
         });
     }
+
+    console.log('mode:', mode);
 
     // 输出编辑页面
     function renderEditPage(data) {
@@ -108,6 +169,10 @@ $(function () {
             showError();
             return;
         }
+
+        // 得到APP的包名，创建目录时会用到
+        packageName = appData.packageName;
+        appName = appData.title;
 
         // 输出编辑页面 头部
         var editorHeader = renderEditorHeaderTpl(appData);

@@ -6,11 +6,16 @@
 *.log
 
 /node_modules/
-/app/public/css
-/app/public/js
-/app/public/img
-/app/src/components
+
 /dist/
 /test/output/
 /.sass-cache/
 /.tmp/
+
+/app/public/css
+/app/public/js
+/app/public/img
+/app/src/components
+
+/app/data.json
+/app/content/

@@ -4,21 +4,39 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 16:46:34
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-06-03 20:30:19
+* @Last Modified time: 2014-06-04 21:42:51
 */
 
 var express = require('express');
 var router = express.Router();
+var path = require('path');
+var file = require('../controller/file-operations');
 
-
+// 首页 跳转
+// apps.wandoujia.com/ => apps.wandoujia.com/admin
 router.get('/', function (req, res) {
     // res.send('respond with a resource');
     // res.render('index', { title: 'Express' });
     res.redirect('/admin/articles');
 });
 
+// 输出 文章列表 页面
+// apps.wandoujia.com/admin/articles/
 router.get('/articles', function (req, res) {
-    var articles = ['哈哈', '和'];
+
+    file.createJSON();
+
+    var targetFolder = path.resolve(__dirname + '/' + '../content/articles/');
+    var files = file.getAllFoldersAndFiles(targetFolder).files;
+    var articles = [];
+
+    for (var i = files.length - 1; i >= 0; i--) {
+        console.log('files[i]', files[i]);
+        articles.push(files[i].split('/').slice(-2, -1)[0]);
+    }
+
+    // console.log('articles', articles);
+
     var currentPage = 'admin-articles';
 
     res.render('index', {
@@ -27,6 +45,9 @@ router.get('/articles', function (req, res) {
     });
 });
 
+
+// 输出 草稿列表 页面
+// apps.wandoujia.com/admin/drafts/
 router.get('/drafts', function (req, res) {
     var drafts = ['么么哒', '湖库妈妈她'];
     var currentPage = 'admin-drafts';
@@ -37,18 +58,79 @@ router.get('/drafts', function (req, res) {
     });
 });
 
+
+// 输出 撰写文章 页面
+// apps.wandoujia.com/admin/articles/new
 router.get('/articles/new', function (req, res) {
     // res.send('respond with a resource');
-    res.render('new', { title: 'Express' });
+    res.render('new');
 });
 
+
+// 发布新文章
 router.post('/articles/new', function (req, res) {
-    res.json({
-        text : 'respond with a resource'
+    var pageData = req.body.pageData;
+    var directoryName = req.body.directoryName;
+    var isDraft = false;
+
+    // 创建文件
+    file.mkdirSync(isDraft, pageData, directoryName, 0, function (e) {
+        if (e) {
+            res.json({
+                text : '出错了',
+                error : e
+            });
+        } else {
+            res.json({
+                text : '文章发布成功'
+            });
+        }
     });
     // res.render('new', { title: 'Express' });
 });
 
+
+// 保存草稿
+router.post('/drafts/new', function (req, res) {
+    var pageData = req.body.pageData;
+    var directoryName = req.body.directoryName;
+    var appName = req.body.appName;
+    var packageName = directoryName;
+    var isDraft = true;
+
+    // 创建草稿文件
+    file.mkdirSync(isDraft, pageData, directoryName, 0, function (e) {
+        if (e) {
+            res.json({
+                text : '出错了',
+                error : e
+            });
+        } else {
+
+            // 创建JSON文件
+            file.createJSON(appName, packageName);
+
+            res.json({
+                text : '保存草稿成功'
+            });
+        }
+    });
+});
+
+// 编辑未发布的草稿
+router.get('/edit/:packageName', function (req, res) {
+    var file = path.resolve(__dirname + '/' + '../content/drafts/' + req.params.packageName + '/index.html');
+    res.sendfile(file);
+});
+
+// TODO
+// 编辑已发布的文章
+router.get('/articles/edit/:packageName', function (req, res) {
+    var file = path.resolve(__dirname + '/' + '../content/articles/' + req.params.packageName + '/index.html');
+    res.sendfile(file);
+});
+
+// 模拟API获取某条评论
 router.get('/fake/comment', function (req, res) {
     res.json({
             id: 7083462,
