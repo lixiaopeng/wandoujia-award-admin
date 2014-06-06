@@ -10,11 +10,19 @@ block content
 
         article#content
             .container
-                h1 All Drafts
-                ul
-                    each draft in drafts
-                        li= draft
+                if drafts.length > 0
+                    ul.list
+                        each draft in drafts
+                            li
+                                .action
+                                    a.ui.button.mini.red.del-btn(href='javascript:void(0)', data-name='#{draft.packageName}', data-type='drafts') 删除
+                                    a.ui.button.mini.teal(href='javascript:void(0)') 继续编辑
 
+                                a.item-title(href='/admin/drafts/edit/#{draft.packageName}') #{draft.appName}
+                                span.time 创建于 #{draft.creationTime}
+                    //- p.pager 分页还没做
+                else
+                    p.no-data 没有数据
 
 
 

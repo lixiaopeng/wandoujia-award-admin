@@ -8,8 +8,9 @@ block content
             i.entypo-home
 
         ul#page-action
-            li#draft-btn.ui.button 保存草稿
-            li#publish-btn.ui.button 直接发布
+            li#draft-btn.ui.button 存为草稿
+            li#publish-btn.ui.button 发布
+
 
         #content
             //- 编辑区
@@ -87,4 +88,8 @@ block content
     include templates/editor-sub-tpl
 
     script#current-mode.
-        var mode = 'edit';
+        var globalData = {
+            mode: 'new',
+            packageName: null,
+            appName: null
+        };

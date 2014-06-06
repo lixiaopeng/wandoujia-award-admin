@@ -39,7 +39,7 @@ script#editor-app-box-tpl(type='text/template')
         h3(contenteditable='true') <%= title %>
         .num-list
             span.item.installed
-                | <i itemprop='interactionCount', content='UserDownloads:<%= installedCount %>'> <%= installedCountStr %> </i>
+                i <%= installedCountStr %>
                 b 人安装
             span.item.liked
                 i <%= likesCount %>

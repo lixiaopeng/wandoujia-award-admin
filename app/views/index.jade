@@ -10,10 +10,19 @@ block content
 
         article#content
             .container
-                h1 All Artiles
-                ul
-                    each article in articles
-                        li= article
+                if articles.length > 0
+                    ul.list
+                        each article in articles
+                            li
+                                .action
+                                    a.ui.button.mini.red.del-btn(href='javascript:void(0)', data-name='#{article.packageName}', data-type='articles') 删除
+                                    a.ui.button.mini.teal(href='/admin/articles/edit/#{article.packageName}') 修改
+
+                                a.item-title(href='/award/blog/#{article.packageName}', target='_blank') #{article.appName}
+                                span.time 创建于 #{article.creationTime}
+                    //- p.pager 分页还没做
+                else
+                    p.no-data 没有数据
 
 
 

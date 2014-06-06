@@ -1,16 +1,19 @@
-/*global $, Modernizr, require, _, __dirname, suggestion, Pen, module, classie, jQuery, mode*/
+/*global $, Modernizr, require, _, __dirname, suggestion, Pen, module, classie, jQuery, globalData*/
 
 /*
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-06-04 21:08:11
+* @Last Modified time: 2014-06-06 16:20:18
 */
 
 $(function () {
 
+    // API
     var searchApi = 'http://apps.wandoujia.com/api/v1/search/';
-    var option = '?max=12&hasAd=0&start=0&opt_fields=description,likesCount,title,packageName,icons.px48,icons.px100,tagline,screenshots.normal,installedCountStr,installedCount,commentsCount,award.*';
+    var option = '?max=12&start=0&opt_fields=description,likesCount,title,packageName,icons.px48,icons.px100,tagline,screenshots.normal,installedCountStr,installedCount,commentsCount,award.*';
+
+    // 页面元素
     var searchAppOverlay = $('#search-app-overlay');
     var appSearchListTpl = $('#app-search-list-tpl');
     var editorHeaderTpl = $('#editor-header-tpl');
@@ -18,10 +21,19 @@ $(function () {
     var editorCommentBoxTpl = $('#editor-comment-box-tpl');
     var editorWrap = $('#editor');
     var article = $('#article-content');
-    var isEditing = false;
+
+    // 页面是否已经保存了草稿或者已经发布
+    var dataSaved = false;
+
+    // 用来传给后端
     var packageName;
     var appName;
 
+    // 评论和访谈模板的初始ID;
+    var commentTplId = 1;
+    var interviewTplId = 1;
+
+    // 模板输出
     var renderAppSearchListTpl = function (appList) {
         return (_.template(appSearchListTpl.html()))({appList: appList});
     };
@@ -38,96 +50,21 @@ $(function () {
         return (_.template(editorCommentBoxTpl.html()))(commentData);
     };
 
-    var commentTplId = 1; // 初始 评论 模板的ID;
-    var interviewTplId = 1; // 初始 访谈 模板的ID;
 
+    // 当前页面状态 用来判断 草稿、文章、新建
+    if (typeof globalData !== 'undefined') {
+        console.log('当前页面状态 mode:', globalData);
+        if (globalData.mode === 'drafts') {
 
-    // 智能提示
-    $('#search-input').suggestion();
+            packageName = globalData.packageName;
+            appName = globalData.appName;
 
-    // 搜索
-    $('#app-search-form').submit(function () {
-        var name = $('#search-input').val();
-        getAppinfoByName(name, false);
-        return false;
-    });
-
-    // 从搜索结果中选择了某一个应用
-    $('#app-search-list').on('click', '.app-card', function () {
-        var name = $(this).data('package');
-        getAppinfoByName(name, true);
-    });
-
-    // 发布文章
-    $('#publish-btn').click(function () {
-
-        // 得到整个页面的html
-        var body = $(document.documentElement).clone();
-
-        // 删除 pageData 中的部分内容
-        body.find('#back-to-admin-home, #page-action, #cover-form, #editor-tools, #app-search-list-tpl, #editor-header-tpl, #editor-app-box-tpl, #editor-comment-box-tpl, .suggestion-wp, #insert-tpl, .box-action, .comment-id-input').remove();
-
-        // 删除可编辑状态
-        body.find('[contenteditable]').removeAttr('contenteditable');
-
-        // 重新组织JS
-        body.find('script').not('#current-mode').remove();
-        // todo
-        // 需要增加获取APP最新数据的API,否则最终输出的页面中，APP安装数量等数据都是旧的、静态的。
-        // 可以增加一个数字的动画效果，把旧的数据改写成API的新数据。
-        body.append('<script src="/src/components/jquery/dist/jquery.js"></script><script src="/src/components/classie/classie.js"></script><script src="/src/javascripts/intro-effect.js"></script>');
-
-        // 替换页面状态
-        // edit: 发布新文章 (默认)
-        // draft: 草稿
-        // article: 发布完成的文章
-        body.find('#current-mode').html('var mode = "article";');
-
-        // var pageData = document.documentElement.innerHTML;
-        var pageData = body.html();
-        // console.log('pageData', pageData);
-
-        // 补全HTML结构
-        pageData = '<!DOCTYPE html><html lang="en" class="no-js">' + pageData + '</html>';
-
-
-        // 设置路径名称
-        var directoryName = packageName;
-
-        $.ajax({
-            type: 'POST',
-            url: '/admin/articles/new',
-            data : {pageData: pageData, directoryName: directoryName},
-            success: function (res) {
-                console.log(res);
-            }
-        });
-    });
-
-    // 保存草稿
-    $('#draft-btn').click(function () {
-
-        // 得到整个页面的html
-        // var pageData = document.documentElement.innerHTML;
-        var body = $(document.documentElement).clone();
-
-        // 替换页面状态
-        body.find('#current-mode').html('var mode = "draft";');
-
-        var pageData = body.html();
-
-        // 设置路径名称
-        var directoryName = packageName;
-
-        $.ajax({
-            type: 'POST',
-            url: '/admin/drafts/new',
-            data : {pageData: pageData, directoryName: directoryName, appName : appName},
-            success: function (res) {
-                console.log(res);
-            }
-        });
-    });
+            heroCoverSubmitHandle();
+            initPenEditor();
+            initTools();
+            pageScrollHandle();
+        }
+    }
 
     // 通过搜索API去查询应用信息
     // single 为 false 时，是第一次搜索;
@@ -137,14 +74,14 @@ $(function () {
             type: 'GET',
             url: searchApi + name + option,
             success: function (data) {
-                // console.log('data', data);
 
                 if (!selectedOneApp) {
+                    console.log('所有data', data);
                     // 把搜索结果显示在列表中
                     var appSearchList = renderAppSearchListTpl(data.appList);
                     $('#app-search-list').html(appSearchList).show().scrollTop(0);
                 } else {
-
+                    console.log('选择的data', data);
                     // todo
                     showLoading();
 
@@ -155,24 +92,25 @@ $(function () {
         });
     }
 
-    console.log('mode:', mode);
-
     // 输出编辑页面
     function renderEditPage(data) {
         var appData = data.appList[0];
         var awardData = null;
 
-        console.log('所有data', data);
         console.log('单独某个appData', appData);
 
         if (!appData) {
-            showError();
+            // TODO
+            // 搜索某些包名是会得不到数据
+            // e.g: com.bestcoolfungamesfreegameappcreation.fireworks
+            showMessage('error', '未知原因');
             return;
         }
 
         // 得到APP的包名，创建目录时会用到
         packageName = appData.packageName;
-        appName = appData.title;
+        // 有的 app (eg: line) 的 title 会包含一些字符 <em> ） 等，需要替换掉
+        appName = appData.title.replace(/(<|\/|em>|\)|）)/g, '');
 
         // 输出编辑页面 头部
         var editorHeader = renderEditorHeaderTpl(appData);
@@ -190,52 +128,10 @@ $(function () {
         heroCoverSubmitHandle();
 
         // 初始化编辑器
-        // 可编辑 APP 名称
-        var appTitlePenOptions = {
-            editor: document.getElementById('app-title'),
-            class: 'pen1',
-            debug: true,
-            textarea: '<input name="app-title" />',
-            list: null
-        };
-
-        // 可编辑文章标题
-        var articleTitlePenOptions = {
-            editor: document.getElementById('article-title'),
-            class: 'pen2',
-            debug: true,
-            textarea: '<input name="article-title" />',
-            list: null
-        };
-
-        // 可编辑文章内容
-        var articleContentPenOptions = {
-            editor: document.getElementById('article-content'),
-            class: 'pen',
-            debug: true,
-            textarea: '<textarea name="article-content"></textarea>',
-            // list: ['blockquote', 'h2', 'h3', 'p', 'insertorderedlist', 'insertunorderedlist', 'inserthorizontalrule', 'indent', 'outdent', 'bold', 'italic', 'underline', 'createlink'
-            list: null
-        };
-
-        // 初始化 Pen
-        var appTitlePen = new Pen(appTitlePenOptions);
-        var artileTitlePen = new Pen(articleTitlePenOptions);
-        var articleContentPen = new Pen(articleContentPenOptions);
-
-
-        // 复制粘贴富文本内容时，转成text
-        $('[contenteditable]').on('paste', function (e) {
-            e.preventDefault();
-            var text = (window.clipboardData || (e.originalEvent || e).clipboardData).getData('text/plain');
-            document.execCommand('insertText', false, text);
-        });
+        initPenEditor();
 
         // 初始化工具
         initTools();
-
-        // 设为编辑状态
-        isEditing = true;
 
         // 判断该 app 是否已经自带 award
         if (appData.award.blogTitle) {
@@ -257,7 +153,7 @@ $(function () {
     // app 截图处理
     function screenshotsArrangeHandle(appData) {
 
-         // 设置固定高度
+        // 设置固定高度
         var staticHeight = 333;
 
         // 现在是取的第一个截图
@@ -329,6 +225,48 @@ $(function () {
         }
     }
 
+    // 启动编辑器
+    function initPenEditor() {
+        // 复制粘贴富文本内容时，转成text
+        $('[contenteditable]').on('paste', function (e) {
+            e.preventDefault();
+            var text = (window.clipboardData || (e.originalEvent || e).clipboardData).getData('text/plain');
+            document.execCommand('insertText', false, text);
+        });
+
+        // 可编辑 APP 名称
+        var appTitlePenOptions = {
+            editor: document.getElementById('app-title'),
+            class: 'pen1',
+            debug: true,
+            textarea: '<input name="app-title" />',
+            list: null
+        };
+
+        // 可编辑文章标题
+        var articleTitlePenOptions = {
+            editor: document.getElementById('article-title'),
+            class: 'pen2',
+            debug: true,
+            textarea: '<input name="article-title" />',
+            list: null
+        };
+
+        // 可编辑文章内容
+        var articleContentPenOptions = {
+            editor: document.getElementById('article-content'),
+            class: 'pen',
+            debug: true,
+            textarea: '<textarea name="article-content"></textarea>',
+            // list: ['blockquote', 'h2', 'h3', 'p', 'insertorderedlist', 'insertunorderedlist', 'inserthorizontalrule', 'indent', 'outdent', 'bold', 'italic', 'underline', 'createlink'
+            list: null
+        };
+
+        // 初始化 Pen
+        var appTitlePen = new Pen(appTitlePenOptions);
+        var artileTitlePen = new Pen(articleTitlePenOptions);
+        var articleContentPen = new Pen(articleContentPenOptions);
+    }
 
     // 启动左侧的工具条功能
     function initTools() {
@@ -398,9 +336,9 @@ $(function () {
     }
 
     // 错误提示
-    function showError() {
+    function showMessage(type, mes) {
         // TODO
-        alert('出错了');
+        alert(type +  ' : ' + mes);
     }
 
     function showLoading() {
@@ -414,7 +352,7 @@ $(function () {
     // 页面刷新，如果是正在编辑状态，则弹出提示
     window.onbeforeunload = function (e) {
         // TODO
-        if (isEditing) {
+        if (dataSaved === false && $('#main').hasClass('editing')) {
             return '文章还没有保存';
         }
     };
@@ -631,5 +569,138 @@ $(function () {
         });
 
     }
+
+/////////////////
+
+    // 智能提示
+    $('#search-input').suggestion();
+
+    // 搜索
+    $('#app-search-form').submit(function () {
+        var name = $('#search-input').val();
+        getAppinfoByName(name, false);
+        return false;
+    });
+
+    // 从搜索结果中选择了某一个应用
+    $('#app-search-list').on('click', '.app-card', function () {
+        var name = $(this).data('package');
+        getAppinfoByName(name, true);
+    });
+
+    // 发布文章
+    $('#publish-btn').click(function () {
+
+        // 得到整个页面的html
+        var body = $(document.documentElement).clone();
+
+        // 删除 pageData 中的部分内容
+        body.find('#back-to-admin-home, #page-action, #cover-form, #editor-tools, #app-search-list-tpl, #editor-header-tpl, #editor-app-box-tpl, #editor-comment-box-tpl, .suggestion-wp, #insert-tpl, .box-action, .comment-id-input').remove();
+
+        // 删除可编辑状态
+        body.find('[contenteditable]').removeAttr('contenteditable');
+
+        // 重新组织JS
+        body.find('script').not('#current-mode').remove();
+        // todo
+        // 需要增加获取APP最新数据的API,否则最终输出的页面中，APP安装数量等数据都是旧的、静态的。
+        // 可以增加一个数字的动画效果，把旧的数据改写成API的新数据。
+        body.append('<script src="/src/components/jquery/dist/jquery.js"></script><script src="/src/components/classie/classie.js"></script><script src="/src/javascripts/intro-effect.js"></script>');
+
+        // 替换页面状态
+        // new: 发布新文章 (默认)
+        // drafts: 草稿
+        // articles: 发布完成的文章
+        body.find('#current-mode').html('var globalData = {mode: "articles", packageName: "' + packageName + '", appName: "' + appName + '"};');
+
+        // var pageData = document.documentElement.innerHTML;
+        var pageData = body.html();
+        // console.log('pageData', pageData);
+
+        // 补全HTML结构
+        pageData = '<!DOCTYPE html><html lang="en" class="no-js">' + pageData + '</html>';
+
+
+        // 设置路径名称
+        var directoryName = packageName;
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/articles/new',
+            data : {pageData: pageData, directoryName: directoryName, appName : appName},
+            success: function (res) {
+                console.log(res);
+                if (res.error) {
+                    showMessage('error', res.error);
+                } else {
+                    dataSaved = true;
+                    alert('成功发布');
+                }
+            }
+        });
+    });
+
+    // 保存草稿
+    $('#draft-btn').click(function () {
+
+        // 得到整个页面的html
+        // var pageData = document.documentElement.innerHTML;
+        var body = $(document.documentElement).clone();
+
+        // 替换页面状态
+        body.find('#current-mode').html('var globalData = {mode: "drafts", packageName: "' + packageName + '", appName: "' + appName + '"};');
+
+        var pageData = body.html();
+
+        // 补全HTML结构
+        pageData = '<!DOCTYPE html><html lang="en" class="no-js">' + pageData + '</html>';
+
+        // 设置路径名称
+        var directoryName = packageName;
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/drafts/new',
+            data : {pageData: pageData, directoryName: directoryName, appName : appName},
+            success: function (res) {
+                console.log(res);
+                if (res.error) {
+                    showMessage('error', res.error);
+                } else {
+                    dataSaved = true;
+                    alert('成功保存草稿');
+                    window.location.href = '/admin/drafts/';
+                }
+            }
+        });
+    });
+
+    // 删除
+    $('.del-btn').click(function () {
+        var $t = $(this);
+        var packageName = $t.data('name');
+        var type = $t.data('type');
+        if (confirm('真的要删除它吗？')) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/admin/delete',
+                data: {packageName: packageName, type: type},
+                success: function (res) {
+                    console.log(res);
+                    if (res.error) {
+                        showMessage('error', res.error);
+                    } else {
+                        var ul = $t.parents('ul').eq(0);
+                        $t.parents('li').eq(0).slideUp(function () {
+                            this.remove();
+                            if (ul.find('li').size() === 0) {
+                                ul.after('<p class="no-data">没有数据</p>');
+                            }
+                        }, 0);
+                    }
+                }
+            });
+        }
+    });
 
 });

@@ -36,6 +36,9 @@
 
     #nav a.active {
         @include box-shadow(0 5px 0 0 #3baa24);
+
+        color: #333;
+        cursor: default;
     }
 
     #nav a.button {

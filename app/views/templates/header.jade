@@ -1,16 +1,14 @@
 header#header
     #logo.fl-left WAA
     nav#nav
-        a.ui.green.button.fl-right(href='/admin/articles/new')
-            i.entypo-pencil
-            | New
+        a.ui.green.button.fl-right(href='/admin/articles/new') 写文章
 
         if currentPage == 'admin-articles'
-            a.active(href='/admin/articles') Artiles
+            a.active(href='/admin/articles') 全部文章
         else
-            a(href='/admin/articles') Artiles
+            a(href='/admin/articles') 全部文章
 
         if currentPage == 'admin-drafts'
-            a.active(href='/admin/drafts') Drafts
+            a.active(href='/admin/drafts') 全部草稿
         else
-            a(href='/admin/drafts') Drafts
+            a(href='/admin/drafts') 全部草稿

@@ -17,6 +17,57 @@
 @import "footer";
 @import "input";
 
+
+// ==========
+// List
+// ==========
+.list {
+    // margin-top: 20px;
+    font-size: 14px;
+
+    li {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .item-title {
+        font-size: 18px;
+    }
+
+    .time {
+        padding-left: 10px;
+        font-size: 12px;
+        color: #999;
+    }
+
+    .action {
+        float: right;
+
+        .button {
+            margin: 0 2px;
+        }
+    }
+
+    .button {
+        font-weight: normal;
+    }
+}
+
+.pager {
+    text-align: center;
+    padding: 20px 0;
+    color: #999;
+    font-size: 14px;
+}
+
+.no-data {
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 20px;
+    color: #999;
+}
+
 // ==========
 // Search
 // ==========
@@ -316,6 +367,7 @@
 
         h4 {
             font-size: 20px;
+            outline: none;
         }
 
         .screenshot-list-wrap {
