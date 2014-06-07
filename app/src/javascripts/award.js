@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-06-07 18:04:01
+* @Last Modified time: 2014-06-07 18:15:10
 */
 
 $(function () {
@@ -355,7 +355,8 @@ $(function () {
         })
         // 插入图片
         .on('submit', 'picture-url-input', function (e) {
-
+            e.preventDefault();
+            return false;
         });
     }
 
