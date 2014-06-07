@@ -15,8 +15,9 @@ block content
                         each article in articles
                             li
                                 .action
-                                    a.ui.button.mini.red.del-btn(href='javascript:void(0)', data-name='#{article.packageName}', data-type='articles') 删除
-                                    a.ui.button.mini.teal(href='/admin/articles/edit/#{article.packageName}') 修改
+                                    a.ui.button.mini.basic(href='/award/blog/#{article.packageName}', target='_blank') 查看
+                                    a.ui.button.mini.basic.del-btn(href='javascript:void(0)', data-name='#{article.packageName}', data-type='articles') 删除
+                                    a.ui.button.mini.basic(href='/admin/articles/edit/#{article.packageName}') 修改
 
                                 a.item-title(href='/award/blog/#{article.packageName}', target='_blank') #{article.appName}
                                 span.time 创建于 #{article.creationTime}

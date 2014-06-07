@@ -4,14 +4,16 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-06-06 16:20:18
+* @Last Modified time: 2014-06-07 18:04:01
 */
 
 $(function () {
 
     // API
-    var searchApi = 'http://apps.wandoujia.com/api/v1/search/';
-    var option = '?max=12&start=0&opt_fields=description,likesCount,title,packageName,icons.px48,icons.px100,tagline,screenshots.normal,installedCountStr,installedCount,commentsCount,award.*';
+    var searchAPI = 'http://apps.wandoujia.com/api/v1/search/';
+    var searchOption = '?max=12&start=0&opt_fields=description,likesCount,title,packageName,icons.px48,icons.px100,tagline,screenshots.normal,installedCountStr,installedCount,commentsCount,award.*';
+    var commentsAPI = '';
+    var commentsOption = '';
 
     // 页面元素
     var searchAppOverlay = $('#search-app-overlay');
@@ -32,6 +34,7 @@ $(function () {
     // 评论和访谈模板的初始ID;
     var commentTplId = 1;
     var interviewTplId = 1;
+    var pictureTplId = 1;
 
     // 模板输出
     var renderAppSearchListTpl = function (appList) {
@@ -72,7 +75,7 @@ $(function () {
     function getAppinfoByName(name, selectedOneApp) {
         $.ajax({
             type: 'GET',
-            url: searchApi + name + option,
+            url: searchAPI + name + searchOption,
             success: function (data) {
 
                 if (!selectedOneApp) {
@@ -296,11 +299,25 @@ $(function () {
             $('#interview-tpl-' + interviewTplId + ' input').focus();
         });
 
+        // 插入图片 input
+        $('#insert-pic').focus(function () {
+            article.focus();
+        }).click(function (e) {
+            e.preventDefault();
+            // 生成ID
+            pictureTplId = pictureTplId + 1;
+            var tpl = $('#insert-tpl .picture-tpl-wrap').clone().attr('id', 'picture-tpl-' + pictureTplId);
+            insertNodeAtCaret(tpl[0]);
+            // focus 刚刚插入的 input
+            $('#picture-tpl-' + pictureTplId + ' input').focus();
+        });
+
         // 删除某条 评论 | 访谈
         article.on('click', '.box-action .remove', function () {
             var $t = $(this);
             var commentParent = $t.parents('.comment-tpl-wrap').eq(0);
             var interviewParent = $t.parents('.interview-tpl-wrap').eq(0);
+            var pictureParent = $t.parents('.picture-tpl-wrap').eq(0);
 
             if (confirm('真的要删除它吗？')) {
                 // 判断删除的模板是 comment 还是 interview
@@ -310,6 +327,9 @@ $(function () {
                 } else if (interviewParent.size() > 0) {
                     interviewParent.remove();
                     interviewTplId = interviewTplId - 1;
+                } else if (pictureParent.size() > 0) {
+                    pictureParent.remove();
+                    pictureTplId = pictureTplId - 1;
                 }
             }
         })
@@ -332,6 +352,10 @@ $(function () {
             });
 
             return false;
+        })
+        // 插入图片
+        .on('submit', 'picture-url-input', function (e) {
+
         });
     }
 
@@ -624,20 +648,31 @@ $(function () {
         // 设置路径名称
         var directoryName = packageName;
 
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/admin/articles/new',
+        //     data: {pageData: pageData, directoryName: directoryName, appName : appName},
+        //     success: function (res) {
+        //         console.log(res);
+        //         if (res.error) {
+        //             showMessage('error', res.error);
+        //         } else {
+        //             dataSaved = true;
+        //             alert('发布成功');
+        //             window.location.href = '/admin/articles/';
+        //         }
+        //     }
+        // });
+
         $.ajax({
             type: 'POST',
-            url: '/admin/articles/new',
-            data : {pageData: pageData, directoryName: directoryName, appName : appName},
+            url: 'http://apps.wandoujia.com/admin/awards/fm.xiami.bmamba/edit',
+            data: {},
             success: function (res) {
-                console.log(res);
-                if (res.error) {
-                    showMessage('error', res.error);
-                } else {
-                    dataSaved = true;
-                    alert('成功发布');
-                }
+                console.log('res', res);
             }
         });
+
     });
 
     // 保存草稿

@@ -190,12 +190,12 @@
     top: 10px;
     left: 10px;
     z-index: 4;
-    width: 50px;
-    height: 50px;
-    background: rgba(0,0,0,0.8);
-    text-align: center;
-    line-height: 50px;
-    color: #fff;
+    // width: 50px;
+    // height: 50px;
+    // background: #fff;
+    // text-align: center;
+    // line-height: 50px;
+    // color: #444;
 
     i {
         font-size: 20px;
@@ -216,7 +216,6 @@
     right: 10px;
     z-index: 2;
     padding: 10px;
-    background: #ccc;
 }
 
 .editor-page #content {
@@ -424,17 +423,6 @@
         margin-top: 20px;
     }
 
-    .button {
-        @include border-radius(5px);
-
-        height: 40px;
-        width: 40px;
-        padding: 0;
-        line-height: 40px;
-        font-weight: normal;
-        font-size: 20px;
-    }
-
     .button:hover {
         color: #3baa24;
     }
@@ -477,75 +465,74 @@
     display: none;
 }
 
-// 评论节点
-.comment-tpl {
-    @include inline-block();
+.box-action {
+    position: absolute;
+    right: 0px;
+    top: -31px;
+}
 
+.box-action span {
+    @include inline-block();
+    @include  border-radius(5px);
+
+    padding: 4px 10px;
+    margin-left: 5px;
+    background: #eee;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover {
+        background: #3baa24;
+        color: #fff;
+    }
+}
+
+.edit-mode .box-action {
+    @include transform(translate3d(0, 0, 0));
+    @include transition-property(transform);
+    @include transition-duration(0.2s);
+
+    right: -5px;
+    top: 0;
+}
+
+.edit-mode:hover .box-action {
+    @include transform(translate3d(0, -31px, 0));
+}
+
+// 评论|访谈|图片 模板
+.tpl-wrap {
     position: relative;
     padding: 30px 0;
 
-    .box-action {
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
+    form {
+        position: relative;
+        margin-bottom: 0;
 
-    .box-action span {
-        @include inline-block();
-        @include  border-radius(5px);
+        .ui.input input {
+            padding-right: 65px;
+        }
 
-        padding: 4px 10px;
-        margin-left: 5px;
-        background: #eee;
-        font-size: 12px;
-        cursor: pointer;
-
-        &:hover {
-            background: #3baa24;
-            color: #fff;
+        .button {
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 45px;
+            height: 48px;
         }
     }
-
-    &.edit-mode .box-action {
-        @include transform(translate3d(0, 0, 0));
-        @include transition-property(transform);
-        @include transition-duration(0.2s);
-
-        right: -5px;
-        top: 31px;
-    }
-
-    &.edit-mode:hover .box-action {
-        @include transform(translate3d(0, -31px, 0));
-    }
 }
 
-
-form.comment-id-input {
-    position: relative;
-    margin-bottom: 0;
-
-    .ui.input input {
-        padding-right: 65px;
-    }
-
-    .button {
-        position: absolute;
-        top: 0;
-        right: -5px;
-        font-size: 1.12rem;
-    }
-}
 
 .comment-box-wrap {
     display: none;
 
     .comment-box {
         @include inline-block();
-        // @include border-radius(5px);
-        // @include box-shadow(0 0 3px rgba(0,0,0,0.2));
 
         padding: 15px;
+        border: 1px solid #eee;
+        background: #fff;
     }
 
     .comment-author-avatar {
@@ -579,10 +566,15 @@ form.comment-id-input {
         padding-top: 10px;
         border-top: 1px solid #eee;
         font-size: 14px;
+        outline: none;
     }
 }
 
 // 访谈节点
-.interview-tpl {
+.comment-tpl,
+.interview-tpl,
+.picture-tpl {
+    @include inline-block();
 
+    position: relative;
 }

@@ -4,8 +4,8 @@ block content
 
     #main.editor-page.intro-effect-fadeout
 
-        a#back-to-admin-home(href='/admin/')
-            i.entypo-home
+        a#back-to-admin-home.ui.button.icon(href='/admin/')
+            i.icon.home
 
         ul#page-action
             li#draft-btn.ui.button 存为草稿
@@ -27,16 +27,16 @@ block content
                                 li
                                     span 插入用户评论
                                     button.ui.button.icon#insert-comment(type='button', title='插入用户评论')
-                                        i.entypo-comment
+                                        i.icon.comment
 
                                 li
                                     span 插入开发者访谈
                                     button.ui.button.icon#insert-interview(type='button', title='插入开发者访谈')
-                                        i.entypo-chat
+                                        i.icon.chat
                                 li
                                     span 插入图片
                                     button.ui.button.icon#insert-pic(type='button', title='插入图片')
-                                        i.entypo-picture
+                                        i.icon.photo
                         //- 正文
                         article#article-content
                             | 在这里写文章
@@ -48,38 +48,63 @@ block content
                     .ui.input.massive.fluid
                         input#search-input(type='text', placeholder='请输入“应用名称”或者“应用包名”', autofocus, autocomplete='off')
                         button.hide(type='submit')
-                            i.entypo-search
+                            i.icon.search
                 ul#app-search-list
 
         //- 编辑器中的 评论 访谈 模板
         #insert-tpl
             //- 评论模板
-            .comment-tpl-wrap(contenteditable='false')
+            .comment-tpl-wrap.tpl-wrap(contenteditable='false')
                 .comment-tpl.edit-mode
                     .box-action
                         span.edit
-                            i.entypo-pencil
+                            i.icon.pencil
                             |  修改
                         span.remove
-                            i.entypo-cancel
+                            i.icon.remove
                             |  删除
                     form.comment-id-input
                         .ui.input.action
                             input(type='text', placeholder='请输入目标评论的ID')
-                            button.ui.button(type='submit')
-                                i.entypo-plus-circled
-
+                            button.ui.button.icon(type='submit')
+                                i.icon.add.sign
                     .comment-box-wrap
 
 
             //- 访谈模板
-            .interview-tpl-wrap(contenteditable='false')
+            .interview-tpl-wrap.tpl-wrap(contenteditable='false')
                 .interview-tpl.edit-mode
                     .box-action
-                        span.edit 修改
-                        span.remove 删除
-                    .interview-uid-input.ui.input
-                        input(type='text', placeholder='请输入用户UID')
+                        span.edit
+                            i.icon.pencil
+                            |  修改
+                        span.remove
+                            i.icon.remove
+                            |  删除
+                    form.interview-uid-input
+                        .ui.input.action
+                            input(type='text', placeholder='请输入用户UID')
+                            button.ui.button.icon(type='submit')
+                                    i.icon.add.sign
+                    .interview-box-wrap
+
+
+            //- 图片模板
+            .picture-tpl-wrap.tpl-wrap(contenteditable='false')
+                .picture-tpl.edit-mode
+                    .box-action
+                        span.edit
+                            i.icon.pencil
+                            |  修改
+                        span.remove
+                            i.icon.remove
+                            |  删除
+                    form.picture-url-input
+                        .ui.input.action
+                            input(type='text', placeholder='请输入图片URL')
+                            button.ui.button.icon(type='submit')
+                                    i.icon.add.sign
+                    .picture-box-wrap
 
     //- 搜索App时的搜索结果模板
     include templates/app-search-list-tpl
@@ -87,6 +112,7 @@ block content
     //- 编辑器中用到模板
     include templates/editor-sub-tpl
 
+    //- 当前页面状态
     script#current-mode.
         var globalData = {
             mode: 'new',

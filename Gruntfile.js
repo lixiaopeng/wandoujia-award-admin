@@ -4,7 +4,7 @@
 * @Author: hanjiyun
 * @Date:   2014-05-22 18:29:11
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2014-05-26 17:20:39
+* @Last Modified time: 2014-06-07 13:17:02
 */
 
 
@@ -58,6 +58,14 @@ module.exports = function (grunt) {
                     dot : true,
                     cwd : 'app/src/images',
                     dest : 'app/public/img',
+                    src : [
+                        '**/*.*'
+                    ]
+                }, {
+                    expand : true,
+                    dot : true,
+                    cwd : 'app/src/fonts',
+                    dest : 'app/public/fonts',
                     src : [
                         '**/*.*'
                     ]
